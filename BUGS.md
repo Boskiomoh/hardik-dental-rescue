@@ -23,28 +23,28 @@ Secret values are redacted everywhere in this report and its screenshots.
 
 ## Summary
 
-| # | Severity | Area | Bug | Status |
+| # | Severity | Area | Bug | Status (commit) |
 |---|---|---|---|---|
-| B01 | Critical | Security | Live secrets committed to the repo (Clerk secret key, database password, Gemini API key) | |
-| B02 | Critical | Security / privacy | Anyone can read, change and delete patient financial records and treatment plans | |
-| B03 | Critical | Booking | Every online booking fails and shows the visitor a raw database error | |
-| B04 | High | Contact | The contact form always fails, so visitor messages never reach the clinic | |
-| B05 | High | Booking | Taken time slots are never shown, so a slot that is already booked is offered again | |
-| B06 | High | Auth | The patient portal can't load a patient's own data (Clerk login, Supabase database) | |
-| B07 | High | Database | A fresh database can't be built from the migrations (base tables are never created) | |
-| B08 | Medium | Security | Anyone can edit feedback records (e.g. mark complaints as "reviewed") | |
-| B09 | Medium | Performance | The whole app ships as one 2.4 MB JavaScript file, 3D scene included | |
-| B10 | Medium | Accessibility | 55 icon-only buttons have no accessible name (axe `button-name`, critical) | |
-| B11 | Medium | Accessibility | 127 text elements fail colour contrast (axe `color-contrast`, serious) | |
-| B12 | Medium | Layout | The header's "Book Appointment" button is off-screen between 768 px and ~1170 px | |
-| B13 | Medium | Booking | The doctor list in the booking form doesn't match the clinic's doctors in the database | |
-| B14 | Low | Data | Contact messages are stored as 5-star review rows | |
-| B15 | Medium | Developer | `npm run dev` shows a blank page | |
-| B16 | Low | Content | Admin dashboard shows invented numbers ("+12% from last month", "Last login: Today, 9:30 AM") | |
-| B17 | Low | Content | Three different clinic names, two phone numbers and an Indian (+91) phone prefix | |
-| B18 | Low | Booking | The form promises email and SMS confirmations that don't exist; date of birth is saved as 1990-01-01 | |
-| B19 | Low | Privacy | Patient and feedback data is printed to the browser console | |
-| B20 | Low | Security | The public AI chatbot endpoint has no real rate limit (per-instance memory only) | |
+| B01 | Critical | Security | Live secrets committed to the repo (Clerk secret key, database password, Gemini API key) | Fixed `b10c3eb` (keys out of our repo; the owner must still rotate them) |
+| B02 | Critical | Security / privacy | Anyone can read, change and delete patient financial records and treatment plans | Fixed `0602e93` |
+| B03 | Critical | Booking | Every online booking fails and shows the visitor a raw database error | Fixed `0602e93`, `62a099a` |
+| B04 | High | Contact | The contact form always fails, so visitor messages never reach the clinic | Fixed `0bb764e` |
+| B05 | High | Booking | Taken time slots are never shown, so a slot that is already booked is offered again | Fixed `0602e93`, `62a099a` |
+| B06 | High | Auth | The patient portal can't load a patient's own data (Clerk login, Supabase database) | Fixed `0602e93`, `f075ff5` |
+| B07 | High | Database | A fresh database can't be built from the migrations (base tables are never created) | Fixed `ff2fa08` |
+| B08 | Medium | Security | Anyone can edit feedback records (e.g. mark complaints as "reviewed") | Fixed `0602e93` |
+| B09 | Medium | Performance | The whole app ships as one 2.4 MB JavaScript file, 3D scene included | Fixed `830bf33` |
+| B10 | Medium | Accessibility | 55 icon-only buttons have no accessible name (axe `button-name`, critical) | Fixed `e277a5b`, `ce8aceb` |
+| B11 | Medium | Accessibility | 127 text elements fail colour contrast (axe `color-contrast`, serious) | Fixed `e277a5b` |
+| B12 | Medium | Layout | The header's "Book Appointment" button is off-screen between 768 px and ~1170 px | Fixed `ce8aceb` |
+| B13 | Medium | Booking | The doctor list in the booking form doesn't match the clinic's doctors in the database | Fixed `62a099a` |
+| B14 | Low | Data | Contact messages are stored as 5-star review rows | Fixed `0602e93`, `0bb764e` |
+| B15 | Medium | Developer | `npm run dev` shows a blank page | Fixed `f075ff5` |
+| B16 | Low | Content | Admin dashboard shows invented numbers ("+12% from last month", "Last login: Today, 9:30 AM") | Fixed `58e1a32` |
+| B17 | Low | Content | Three different clinic names, two phone numbers and an Indian (+91) phone prefix | Fixed `c1c8978`, `62a099a` |
+| B18 | Low | Booking | The form promises email and SMS confirmations that don't exist; date of birth is saved as 1990-01-01 | Fixed `62a099a`, `0602e93` |
+| B19 | Low | Privacy | Patient and feedback data is printed to the browser console | Fixed `bce02b0`, `0bb764e` |
+| B20 | Low | Security | The public AI chatbot endpoint has no real rate limit (per-instance memory only) | Not fixed: needs a shared rate-limit store and the clinic's Gemini key (chatbot not deployed in this demo) |
 
 ## Details
 
@@ -207,7 +207,12 @@ dependencies is served raw. Production builds work, so the live site hides it fr
 **Actual:** "+12% from last month", "+5%", "+8%" are hard-coded under the stat cards. The header says
 "Welcome back, Dr. Admin · Last login: Today, 9:30 AM" for every user.
 
-**Expected:** show real figures or nothing.
+Found while fixing this: the "Recent Notifications" panel is invented too ("Payment received from John Smith,
+4 hours ago", "Appointment reminder sent to 12 patients"), and the four Quick Action buttons only show a toast
+saying the feature "is ready to use!". "Today's appointments" compares against the UTC date, so it is wrong
+in the evening for clinics west of UTC.
+
+**Expected:** show real figures or nothing; buttons do what they say.
 
 ### B17 · Low · Inconsistent clinic identity
 
@@ -215,7 +220,11 @@ dependencies is served raw. Production builds work, so the live site hides it fr
 `info@smilecare.com`. The header phone is (808) 095-0921, but the contact cards and footer say (555) 123-4567.
 The booking form's phone field has a fixed +91 (India) prefix.
 
-**Expected:** one name, one phone number and one email, all from a single config.
+Found while fixing this: the footer's "Main: (555) 123-4567" and "Emergency: (555) 123-4568" links both
+dial (808) 095-0921, and the site gives five different sets of opening hours (footer, contact page, booking
+card and two in the chatbot).
+
+**Expected:** one name, one phone number and one email, all from a single config; links dial the number they show.
 
 ### B18 · Low · False promises and fake data in the booking form
 
