@@ -1,0 +1,52 @@
+Same Playwright suite (tests/e2e) run against the untouched original, 21 Nov 2026.
+Result: 11 passed, 38 failed, 1 skipped (Stripe deposit: feature did not exist).
+FAIL  accounts.spec.ts › a patient signs in and sees only their own appointments
+FAIL  accounts.spec.ts › admin sees only their tabs
+FAIL  accounts.spec.ts › staff sees only their tabs
+FAIL  accounts.spec.ts › doctor sees only their tabs
+FAIL  accounts.spec.ts › a doctor doesn't see billing or delete buttons
+FAIL  accounts.spec.ts › a patient account can't open the admin panel
+FAIL  accounts.spec.ts › the admin can see the team on the Team & Roles tab
+FAIL  public booking › a visitor can book an appointment
+FAIL  public booking › a slot that was just booked is greyed out for the next visitor
+FAIL  public booking › the doctor list comes from the database
+FAIL  public booking › past dates can't be picked
+PASS  anonymous visitor › can't read patients
+PASS  anonymous visitor › can't read appointments
+FAIL  anonymous visitor › can't read patient_financials
+FAIL  anonymous visitor › can't read patient_services
+PASS  anonymous visitor › can't read feedback
+PASS  anonymous visitor › can't read user_roles
+FAIL  anonymous visitor › can't change or delete financial records
+PASS  anonymous visitor › can't mark feedback as reviewed
+FAIL  anonymous visitor › sees taken times but not who booked them
+PASS  anonymous visitor › can't call the team management functions
+FAIL  signed-in roles › a patient reads only their own patient record
+FAIL  signed-in roles › a doctor can't read billing
+FAIL  signed-in roles › front desk reads contact messages but not reviews
+FAIL  signed-in roles › only an admin can list the team
+SKIPPED  deposit.spec.ts › a patient pays the $25 deposit with Stripe's test card
+FAIL  public-pages.spec.ts › "Book Appointment" is reachable at 800px
+FAIL  public-pages.spec.ts › "Book Appointment" is reachable at 1024px
+PASS  public-pages.spec.ts › "Book Appointment" is reachable at 1280px
+FAIL  public-pages.spec.ts › every page shows the same phone number and email
+FAIL  public-pages.spec.ts › the contact form sends a message
+FAIL  public-pages.spec.ts › phones never start the 3D scene (test tightened after the full run; re-run on its own, it fails on the original)
+FAIL  accessibility at 1280px › / has no axe violations
+FAIL  accessibility at 1280px › /services has no axe violations
+FAIL  accessibility at 1280px › /about has no axe violations
+FAIL  accessibility at 1280px › /booking has no axe violations
+FAIL  accessibility at 1280px › /contact has no axe violations
+FAIL  accessibility at 1280px › /feedback has no axe violations
+PASS  accessibility at 1280px › /login has no axe violations
+PASS  accessibility at 1280px › /signup has no axe violations
+FAIL  accessibility at 1280px › /admin has no axe violations
+FAIL  accessibility at 375px › / has no axe violations
+FAIL  accessibility at 375px › /services has no axe violations
+FAIL  accessibility at 375px › /about has no axe violations
+FAIL  accessibility at 375px › /booking has no axe violations
+FAIL  accessibility at 375px › /contact has no axe violations
+FAIL  accessibility at 375px › /feedback has no axe violations
+PASS  accessibility at 375px › /login has no axe violations
+PASS  accessibility at 375px › /signup has no axe violations
+FAIL  accessibility at 375px › /admin has no axe violations
