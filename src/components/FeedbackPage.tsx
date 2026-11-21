@@ -66,13 +66,14 @@ const StarRating: React.FC<{
 }> = ({ value, onChange, name, label }) => {
   return (
     <div className="space-y-2">
-      <Label className="text-sm font-medium text-dental-blue">{label}</Label>
-      <RadioGroup value={value} onValueChange={onChange} className="flex gap-1">
+      <Label id={`${name}-label`} className="text-sm font-medium text-dental-blue">{label}</Label>
+      <RadioGroup value={value} onValueChange={onChange} className="flex gap-1" aria-labelledby={`${name}-label`}>
         {[1, 2, 3, 4, 5].map((rating) => (
           <div key={rating} className="flex items-center space-x-1">
-            <RadioGroupItem 
-              value={rating.toString()} 
+            <RadioGroupItem
+              value={rating.toString()}
               id={`${name}-${rating}`}
+              aria-label={`${rating} out of 5 stars`}
               className="sr-only"
             />
             <Label
@@ -497,11 +498,11 @@ const FeedbackPage: React.FC = () => {
                   <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     <div className="flex items-center gap-2 text-sm text-dental-blue">
                       <Phone className="w-4 h-4" />
-                      <span>(808) 095-0921</span>
+                      <span>(555) 123-4567</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-dental-blue">
                       <Mail className="w-4 h-4" />
-                      <span>info@hardikdental.com</span>
+                      <span>hello@hardikdental.example</span>
                     </div>
                   </div>
                 </div>

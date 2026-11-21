@@ -16,7 +16,7 @@
     --popover-foreground: 222 84% 4.9%;
 
     /* Professional dental blue */
-    --primary: 217 91% 60%;
+    --primary: 217 91% 48%; /* was 60%: 3.6:1 on white, below WCAG AA */
     --primary-foreground: 0 0% 100%;
     --primary-soft: 217 91% 95%;
 
@@ -25,7 +25,7 @@
     --secondary-foreground: 222 84% 4.9%;
 
     --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted-foreground: 215 16% 42%; /* was 47%: 4.3:1 on muted */
 
     /* Dental accent - soft mint */
     --accent: 170 76% 95%;
@@ -45,11 +45,11 @@
     --radius: 0.75rem;
 
     /* Dental-specific design tokens */
-    --dental-blue: 217 91% 60%;
+    --dental-blue: 217 91% 48%; /* was 60%: 3.6:1 on white, below WCAG AA */
     --dental-blue-light: 217 91% 95%;
     --dental-mint: 170 76% 45%;
     --dental-mint-light: 170 76% 95%;
-    --dental-gray: 215 16% 47%;
+    --dental-gray: 215 16% 42%; /* was 47%: 4.1:1 on dental-blue-light */
     --dental-gray-light: 210 20% 96%;
 
     /* Professional gradients */
