@@ -1,0 +1,635 @@
+{
+  "summary": {
+    "label": "before",
+    "baseUrl": "http://localhost:8080",
+    "scannedAt": "2026-11-21T09:36:30.064Z",
+    "pages": 22,
+    "axeViolationTypes": 23,
+    "axeViolationNodes": 182,
+    "consoleErrors": 2,
+    "pageErrors": 0,
+    "pagesWithOverflow": 0
+  },
+  "results": [
+    {
+      "viewport": "desktop",
+      "route": "/",
+      "loadMs": 14200,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [
+        "FAILED https://1-xythjhkgsk7uvcuxkix2sutxn4-oxkaamlqlzvx336f5wfumqvvpe-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-xythjhkgsk7uvcuxkix2sutxn4-oxkaamlqlzvx336f5wfumqvvpe-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-xythjhkgsk7uvcuxkix2sutxn4-oxkaamlqlzvx336f5wfumqvvpe-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-xythjhkgsk7uvcuxkix2sutxn4-oxkaamlqlzvx336f5wfumqvvpe-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-xythjhkgsk7uvcuxkix2sutxn4-oxkaamlqlzvx336f5wfumqvvpe-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-xythjhkgsk7uvcuxkix2sutxn4-oxkaamlqlzvx336f5wfumqvvpe-p.client.protect.clerk.com:2082/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-xythjhkgsk7uvcuxkix2sutxn4-oxkaamlqlzvx336f5wfumqvvpe-p.client.protect.clerk.com:992/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-xythjhkgsk7uvcuxkix2sutxn4-oxkaamlqlzvx336f5wfumqvvpe-p.client.protect.clerk.com:8443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-xythjhkgsk7uvcuxkix2sutxn4-oxkaamlqlzvx336f5wfumqvvpe-p.client.protect.clerk.com:18443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-xythjhkgsk7uvcuxkix2sutxn4-oxkaamlqlzvx336f5wfumqvvpe-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/c/1-xythjhkgsk7uvcuxkix2sutxn4-oxkaam net::ERR_ABORTED"
+      ],
+      "axe": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 1,
+          "help": "Elements must meet minimum color contrast ratio thresholds"
+        }
+      ]
+    },
+    {
+      "viewport": "desktop",
+      "route": "/services",
+      "loadMs": 10183,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [
+        "FAILED https://1-wih2dugitqhb2eouxcz54kk4bq-rdb5plm6z66pzfhoyaazwzdcw4-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-wih2dugitqhb2eouxcz54kk4bq-rdb5plm6z66pzfhoyaazwzdcw4-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-wih2dugitqhb2eouxcz54kk4bq-rdb5plm6z66pzfhoyaazwzdcw4-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-wih2dugitqhb2eouxcz54kk4bq-rdb5plm6z66pzfhoyaazwzdcw4-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-wih2dugitqhb2eouxcz54kk4bq-rdb5plm6z66pzfhoyaazwzdcw4-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-wih2dugitqhb2eouxcz54kk4bq-rdb5plm6z66pzfhoyaazwzdcw4-p.client.protect.clerk.com:18443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-wih2dugitqhb2eouxcz54kk4bq-rdb5plm6z66pzfhoyaazwzdcw4-p.client.protect.clerk.com:8443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-wih2dugitqhb2eouxcz54kk4bq-rdb5plm6z66pzfhoyaazwzdcw4-p.client.protect.clerk.com:992/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-wih2dugitqhb2eouxcz54kk4bq-rdb5plm6z66pzfhoyaazwzdcw4-p.client.protect.clerk.com:2082/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-wih2dugitqhb2eouxcz54kk4bq-rdb5plm6z66pzfhoyaazwzdcw4-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/c/1-wih2dugitqhb2eouxcz54kk4bq-rdb5pl net::ERR_ABORTED"
+      ],
+      "axe": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 1,
+          "help": "Elements must meet minimum color contrast ratio thresholds"
+        }
+      ]
+    },
+    {
+      "viewport": "desktop",
+      "route": "/about",
+      "loadMs": 9612,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [
+        "FAILED https://1-iwdlbvtidk7ri7tlxgggh23yku-6bf2flaeg3bpnoiy7i2w7w5b6i-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-iwdlbvtidk7ri7tlxgggh23yku-6bf2flaeg3bpnoiy7i2w7w5b6i-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-iwdlbvtidk7ri7tlxgggh23yku-6bf2flaeg3bpnoiy7i2w7w5b6i-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-iwdlbvtidk7ri7tlxgggh23yku-6bf2flaeg3bpnoiy7i2w7w5b6i-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-iwdlbvtidk7ri7tlxgggh23yku-6bf2flaeg3bpnoiy7i2w7w5b6i-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-iwdlbvtidk7ri7tlxgggh23yku-6bf2flaeg3bpnoiy7i2w7w5b6i-p.client.protect.clerk.com:992/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-iwdlbvtidk7ri7tlxgggh23yku-6bf2flaeg3bpnoiy7i2w7w5b6i-p.client.protect.clerk.com:18443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-iwdlbvtidk7ri7tlxgggh23yku-6bf2flaeg3bpnoiy7i2w7w5b6i-p.client.protect.clerk.com:2082/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-iwdlbvtidk7ri7tlxgggh23yku-6bf2flaeg3bpnoiy7i2w7w5b6i-p.client.protect.clerk.com:8443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-iwdlbvtidk7ri7tlxgggh23yku-6bf2flaeg3bpnoiy7i2w7w5b6i-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/c/1-iwdlbvtidk7ri7tlxgggh23yku-6bf2fl net::ERR_ABORTED"
+      ],
+      "axe": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 11,
+          "help": "Elements must meet minimum color contrast ratio thresholds"
+        }
+      ]
+    },
+    {
+      "viewport": "desktop",
+      "route": "/booking",
+      "loadMs": 2036,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "axe": [
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "nodes": 3,
+          "help": "Buttons must have discernible text"
+        },
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 11,
+          "help": "Elements must meet minimum color contrast ratio thresholds"
+        }
+      ]
+    },
+    {
+      "viewport": "desktop",
+      "route": "/contact",
+      "loadMs": 10861,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [
+        "FAILED https://1-zgl2v6wxhatpojzfc5zetpytre-mojx5pykan5srqjrlgo3d5tddi-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zgl2v6wxhatpojzfc5zetpytre-mojx5pykan5srqjrlgo3d5tddi-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zgl2v6wxhatpojzfc5zetpytre-mojx5pykan5srqjrlgo3d5tddi-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zgl2v6wxhatpojzfc5zetpytre-mojx5pykan5srqjrlgo3d5tddi-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zgl2v6wxhatpojzfc5zetpytre-mojx5pykan5srqjrlgo3d5tddi-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zgl2v6wxhatpojzfc5zetpytre-mojx5pykan5srqjrlgo3d5tddi-p.client.protect.clerk.com:8443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zgl2v6wxhatpojzfc5zetpytre-mojx5pykan5srqjrlgo3d5tddi-p.client.protect.clerk.com:2082/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zgl2v6wxhatpojzfc5zetpytre-mojx5pykan5srqjrlgo3d5tddi-p.client.protect.clerk.com:992/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zgl2v6wxhatpojzfc5zetpytre-mojx5pykan5srqjrlgo3d5tddi-p.client.protect.clerk.com:18443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zgl2v6wxhatpojzfc5zetpytre-mojx5pykan5srqjrlgo3d5tddi-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/c/1-zgl2v6wxhatpojzfc5zetpytre-mojx5p net::ERR_ABORTED"
+      ],
+      "axe": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 21,
+          "help": "Elements must meet minimum color contrast ratio thresholds"
+        }
+      ]
+    },
+    {
+      "viewport": "desktop",
+      "route": "/feedback",
+      "loadMs": 10043,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [
+        "FAILED https://1-rfghbrmfwfsl3wpuevcblgclly-dfedf25lgl5pikrmn7u7mfmqim-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-rfghbrmfwfsl3wpuevcblgclly-dfedf25lgl5pikrmn7u7mfmqim-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-rfghbrmfwfsl3wpuevcblgclly-dfedf25lgl5pikrmn7u7mfmqim-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-rfghbrmfwfsl3wpuevcblgclly-dfedf25lgl5pikrmn7u7mfmqim-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-rfghbrmfwfsl3wpuevcblgclly-dfedf25lgl5pikrmn7u7mfmqim-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-rfghbrmfwfsl3wpuevcblgclly-dfedf25lgl5pikrmn7u7mfmqim-p.client.protect.clerk.com:18443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-rfghbrmfwfsl3wpuevcblgclly-dfedf25lgl5pikrmn7u7mfmqim-p.client.protect.clerk.com:2082/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-rfghbrmfwfsl3wpuevcblgclly-dfedf25lgl5pikrmn7u7mfmqim-p.client.protect.clerk.com:8443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-rfghbrmfwfsl3wpuevcblgclly-dfedf25lgl5pikrmn7u7mfmqim-p.client.protect.clerk.com:992/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-rfghbrmfwfsl3wpuevcblgclly-dfedf25lgl5pikrmn7u7mfmqim-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/c/1-rfghbrmfwfsl3wpuevcblgclly-dfedf2 net::ERR_ABORTED"
+      ],
+      "axe": [
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "nodes": 20,
+          "help": "Buttons must have discernible text"
+        },
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 20,
+          "help": "Elements must meet minimum color contrast ratio thresholds"
+        }
+      ]
+    },
+    {
+      "viewport": "desktop",
+      "route": "/login",
+      "loadMs": 9515,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [
+        "FAILED https://1-ki4uyrvxe465fkc42vpocnea3a-mx3hkffsq7meuy2w27735yu3yq-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-ki4uyrvxe465fkc42vpocnea3a-mx3hkffsq7meuy2w27735yu3yq-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-ki4uyrvxe465fkc42vpocnea3a-mx3hkffsq7meuy2w27735yu3yq-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-ki4uyrvxe465fkc42vpocnea3a-mx3hkffsq7meuy2w27735yu3yq-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-ki4uyrvxe465fkc42vpocnea3a-mx3hkffsq7meuy2w27735yu3yq-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-ki4uyrvxe465fkc42vpocnea3a-mx3hkffsq7meuy2w27735yu3yq-p.client.protect.clerk.com:18443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-ki4uyrvxe465fkc42vpocnea3a-mx3hkffsq7meuy2w27735yu3yq-p.client.protect.clerk.com:2082/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-ki4uyrvxe465fkc42vpocnea3a-mx3hkffsq7meuy2w27735yu3yq-p.client.protect.clerk.com:8443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-ki4uyrvxe465fkc42vpocnea3a-mx3hkffsq7meuy2w27735yu3yq-p.client.protect.clerk.com:992/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-ki4uyrvxe465fkc42vpocnea3a-mx3hkffsq7meuy2w27735yu3yq-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/c/1-ki4uyrvxe465fkc42vpocnea3a-mx3hkf net::ERR_ABORTED"
+      ],
+      "axe": []
+    },
+    {
+      "viewport": "desktop",
+      "route": "/signup",
+      "loadMs": 9148,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [
+        "FAILED https://1-buqpxk73v7tcbxu5fw3dcz56qi-db6jrfazlzhevffy3pbtxoefhu-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-buqpxk73v7tcbxu5fw3dcz56qi-db6jrfazlzhevffy3pbtxoefhu-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-buqpxk73v7tcbxu5fw3dcz56qi-db6jrfazlzhevffy3pbtxoefhu-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-buqpxk73v7tcbxu5fw3dcz56qi-db6jrfazlzhevffy3pbtxoefhu-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-buqpxk73v7tcbxu5fw3dcz56qi-db6jrfazlzhevffy3pbtxoefhu-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-buqpxk73v7tcbxu5fw3dcz56qi-db6jrfazlzhevffy3pbtxoefhu-p.client.protect.clerk.com:8443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-buqpxk73v7tcbxu5fw3dcz56qi-db6jrfazlzhevffy3pbtxoefhu-p.client.protect.clerk.com:992/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-buqpxk73v7tcbxu5fw3dcz56qi-db6jrfazlzhevffy3pbtxoefhu-p.client.protect.clerk.com:2082/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-buqpxk73v7tcbxu5fw3dcz56qi-db6jrfazlzhevffy3pbtxoefhu-p.client.protect.clerk.com:18443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-buqpxk73v7tcbxu5fw3dcz56qi-db6jrfazlzhevffy3pbtxoefhu-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/c/1-buqpxk73v7tcbxu5fw3dcz56qi-db6jrf net::ERR_ABORTED"
+      ],
+      "axe": []
+    },
+    {
+      "viewport": "desktop",
+      "route": "/admin",
+      "loadMs": 9052,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [
+        "FAILED https://1-r6pmiqntkkmd76zzdajjo5ngqi-x7jcsdoh4pgnfeqizm6ai6xrk4-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-r6pmiqntkkmd76zzdajjo5ngqi-x7jcsdoh4pgnfeqizm6ai6xrk4-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-r6pmiqntkkmd76zzdajjo5ngqi-x7jcsdoh4pgnfeqizm6ai6xrk4-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-r6pmiqntkkmd76zzdajjo5ngqi-x7jcsdoh4pgnfeqizm6ai6xrk4-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-r6pmiqntkkmd76zzdajjo5ngqi-x7jcsdoh4pgnfeqizm6ai6xrk4-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-r6pmiqntkkmd76zzdajjo5ngqi-x7jcsdoh4pgnfeqizm6ai6xrk4-p.client.protect.clerk.com:8443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-r6pmiqntkkmd76zzdajjo5ngqi-x7jcsdoh4pgnfeqizm6ai6xrk4-p.client.protect.clerk.com:18443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-r6pmiqntkkmd76zzdajjo5ngqi-x7jcsdoh4pgnfeqizm6ai6xrk4-p.client.protect.clerk.com:992/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-r6pmiqntkkmd76zzdajjo5ngqi-x7jcsdoh4pgnfeqizm6ai6xrk4-p.client.protect.clerk.com:2082/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-r6pmiqntkkmd76zzdajjo5ngqi-x7jcsdoh4pgnfeqizm6ai6xrk4-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/c/1-r6pmiqntkkmd76zzdajjo5ngqi-x7jcsd net::ERR_ABORTED"
+      ],
+      "axe": [
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "nodes": 1,
+          "help": "Buttons must have discernible text"
+        }
+      ]
+    },
+    {
+      "viewport": "desktop",
+      "route": "/patient-dashboard",
+      "loadMs": 9652,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [
+        "FAILED https://1-pdn3slwbqimlg55vpftelygdfq-d5bb7kg2rnh7lpq4hbs7mk7yfa-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-pdn3slwbqimlg55vpftelygdfq-d5bb7kg2rnh7lpq4hbs7mk7yfa-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-pdn3slwbqimlg55vpftelygdfq-d5bb7kg2rnh7lpq4hbs7mk7yfa-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-pdn3slwbqimlg55vpftelygdfq-d5bb7kg2rnh7lpq4hbs7mk7yfa-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-pdn3slwbqimlg55vpftelygdfq-d5bb7kg2rnh7lpq4hbs7mk7yfa-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-pdn3slwbqimlg55vpftelygdfq-d5bb7kg2rnh7lpq4hbs7mk7yfa-p.client.protect.clerk.com:2082/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-pdn3slwbqimlg55vpftelygdfq-d5bb7kg2rnh7lpq4hbs7mk7yfa-p.client.protect.clerk.com:8443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-pdn3slwbqimlg55vpftelygdfq-d5bb7kg2rnh7lpq4hbs7mk7yfa-p.client.protect.clerk.com:992/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-pdn3slwbqimlg55vpftelygdfq-d5bb7kg2rnh7lpq4hbs7mk7yfa-p.client.protect.clerk.com:18443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-pdn3slwbqimlg55vpftelygdfq-d5bb7kg2rnh7lpq4hbs7mk7yfa-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/c/1-pdn3slwbqimlg55vpftelygdfq-d5bb7k net::ERR_ABORTED"
+      ],
+      "axe": []
+    },
+    {
+      "viewport": "desktop",
+      "route": "/this-page-does-not-exist",
+      "loadMs": 9958,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [
+        "404 Error: User attempted to access non-existent route: /this-page-does-not-exist"
+      ],
+      "pageErrors": [],
+      "failedRequests": [
+        "FAILED https://1-7hy4uclcxg4hupz22zg27ery4y-b4ueg5ip2hixa2yikczvnleclu-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-7hy4uclcxg4hupz22zg27ery4y-b4ueg5ip2hixa2yikczvnleclu-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-7hy4uclcxg4hupz22zg27ery4y-b4ueg5ip2hixa2yikczvnleclu-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-7hy4uclcxg4hupz22zg27ery4y-b4ueg5ip2hixa2yikczvnleclu-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-7hy4uclcxg4hupz22zg27ery4y-b4ueg5ip2hixa2yikczvnleclu-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-7hy4uclcxg4hupz22zg27ery4y-b4ueg5ip2hixa2yikczvnleclu-p.client.protect.clerk.com:8443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-7hy4uclcxg4hupz22zg27ery4y-b4ueg5ip2hixa2yikczvnleclu-p.client.protect.clerk.com:992/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-7hy4uclcxg4hupz22zg27ery4y-b4ueg5ip2hixa2yikczvnleclu-p.client.protect.clerk.com:18443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-7hy4uclcxg4hupz22zg27ery4y-b4ueg5ip2hixa2yikczvnleclu-p.client.protect.clerk.com:2082/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-7hy4uclcxg4hupz22zg27ery4y-b4ueg5ip2hixa2yikczvnleclu-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/c/1-7hy4uclcxg4hupz22zg27ery4y-b4ueg5 net::ERR_ABORTED"
+      ],
+      "axe": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 2,
+          "help": "Elements must meet minimum color contrast ratio thresholds"
+        }
+      ]
+    },
+    {
+      "viewport": "phone",
+      "route": "/",
+      "loadMs": 9638,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [
+        "FAILED https://1-44ng6hn7o5k63zvnzf3ttvdkqi-2ucmfweiuad7e6lqoqjrdxyxla-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-44ng6hn7o5k63zvnzf3ttvdkqi-2ucmfweiuad7e6lqoqjrdxyxla-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-44ng6hn7o5k63zvnzf3ttvdkqi-2ucmfweiuad7e6lqoqjrdxyxla-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-44ng6hn7o5k63zvnzf3ttvdkqi-2ucmfweiuad7e6lqoqjrdxyxla-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-44ng6hn7o5k63zvnzf3ttvdkqi-2ucmfweiuad7e6lqoqjrdxyxla-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-44ng6hn7o5k63zvnzf3ttvdkqi-2ucmfweiuad7e6lqoqjrdxyxla-p.client.protect.clerk.com:8443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-44ng6hn7o5k63zvnzf3ttvdkqi-2ucmfweiuad7e6lqoqjrdxyxla-p.client.protect.clerk.com:992/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-44ng6hn7o5k63zvnzf3ttvdkqi-2ucmfweiuad7e6lqoqjrdxyxla-p.client.protect.clerk.com:18443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-44ng6hn7o5k63zvnzf3ttvdkqi-2ucmfweiuad7e6lqoqjrdxyxla-p.client.protect.clerk.com:2082/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-44ng6hn7o5k63zvnzf3ttvdkqi-2ucmfweiuad7e6lqoqjrdxyxla-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/c/1-44ng6hn7o5k63zvnzf3ttvdkqi-2ucmfw net::ERR_ABORTED"
+      ],
+      "axe": [
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "nodes": 1,
+          "help": "Buttons must have discernible text"
+        }
+      ]
+    },
+    {
+      "viewport": "phone",
+      "route": "/services",
+      "loadMs": 9107,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [
+        "FAILED https://1-zcqhn4zpnebdlgts7ascjpn3mu-hsfoidh2evby3326rkfkq2gcqu-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zcqhn4zpnebdlgts7ascjpn3mu-hsfoidh2evby3326rkfkq2gcqu-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zcqhn4zpnebdlgts7ascjpn3mu-hsfoidh2evby3326rkfkq2gcqu-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zcqhn4zpnebdlgts7ascjpn3mu-hsfoidh2evby3326rkfkq2gcqu-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zcqhn4zpnebdlgts7ascjpn3mu-hsfoidh2evby3326rkfkq2gcqu-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zcqhn4zpnebdlgts7ascjpn3mu-hsfoidh2evby3326rkfkq2gcqu-p.client.protect.clerk.com:8443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zcqhn4zpnebdlgts7ascjpn3mu-hsfoidh2evby3326rkfkq2gcqu-p.client.protect.clerk.com:2082/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zcqhn4zpnebdlgts7ascjpn3mu-hsfoidh2evby3326rkfkq2gcqu-p.client.protect.clerk.com:18443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zcqhn4zpnebdlgts7ascjpn3mu-hsfoidh2evby3326rkfkq2gcqu-p.client.protect.clerk.com:992/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zcqhn4zpnebdlgts7ascjpn3mu-hsfoidh2evby3326rkfkq2gcqu-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/c/1-zcqhn4zpnebdlgts7ascjpn3mu-hsfoid net::ERR_ABORTED"
+      ],
+      "axe": [
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "nodes": 1,
+          "help": "Buttons must have discernible text"
+        }
+      ]
+    },
+    {
+      "viewport": "phone",
+      "route": "/about",
+      "loadMs": 9546,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [
+        "FAILED https://1-dmk66ug335awde33tuu6gsika4-jm7kubz2wk6xgazn5xbxpw2tvy-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-dmk66ug335awde33tuu6gsika4-jm7kubz2wk6xgazn5xbxpw2tvy-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-dmk66ug335awde33tuu6gsika4-jm7kubz2wk6xgazn5xbxpw2tvy-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-dmk66ug335awde33tuu6gsika4-jm7kubz2wk6xgazn5xbxpw2tvy-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-dmk66ug335awde33tuu6gsika4-jm7kubz2wk6xgazn5xbxpw2tvy-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-dmk66ug335awde33tuu6gsika4-jm7kubz2wk6xgazn5xbxpw2tvy-p.client.protect.clerk.com:992/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-dmk66ug335awde33tuu6gsika4-jm7kubz2wk6xgazn5xbxpw2tvy-p.client.protect.clerk.com:18443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-dmk66ug335awde33tuu6gsika4-jm7kubz2wk6xgazn5xbxpw2tvy-p.client.protect.clerk.com:2082/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-dmk66ug335awde33tuu6gsika4-jm7kubz2wk6xgazn5xbxpw2tvy-p.client.protect.clerk.com:8443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-dmk66ug335awde33tuu6gsika4-jm7kubz2wk6xgazn5xbxpw2tvy-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/c/1-dmk66ug335awde33tuu6gsika4-jm7kub net::ERR_ABORTED"
+      ],
+      "axe": [
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "nodes": 1,
+          "help": "Buttons must have discernible text"
+        },
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 10,
+          "help": "Elements must meet minimum color contrast ratio thresholds"
+        }
+      ]
+    },
+    {
+      "viewport": "phone",
+      "route": "/booking",
+      "loadMs": 1732,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "axe": [
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "nodes": 4,
+          "help": "Buttons must have discernible text"
+        },
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 10,
+          "help": "Elements must meet minimum color contrast ratio thresholds"
+        }
+      ]
+    },
+    {
+      "viewport": "phone",
+      "route": "/contact",
+      "loadMs": 12676,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [
+        "FAILED https://1-2oe25244ccdoisiaqoyteowgce-zxgg6b47ac7mcizqaciuzkz5oe-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-2oe25244ccdoisiaqoyteowgce-zxgg6b47ac7mcizqaciuzkz5oe-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-2oe25244ccdoisiaqoyteowgce-zxgg6b47ac7mcizqaciuzkz5oe-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-2oe25244ccdoisiaqoyteowgce-zxgg6b47ac7mcizqaciuzkz5oe-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-2oe25244ccdoisiaqoyteowgce-zxgg6b47ac7mcizqaciuzkz5oe-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-2oe25244ccdoisiaqoyteowgce-zxgg6b47ac7mcizqaciuzkz5oe-p.client.protect.clerk.com:8443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-2oe25244ccdoisiaqoyteowgce-zxgg6b47ac7mcizqaciuzkz5oe-p.client.protect.clerk.com:992/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-2oe25244ccdoisiaqoyteowgce-zxgg6b47ac7mcizqaciuzkz5oe-p.client.protect.clerk.com:18443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-2oe25244ccdoisiaqoyteowgce-zxgg6b47ac7mcizqaciuzkz5oe-p.client.protect.clerk.com:2082/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-2oe25244ccdoisiaqoyteowgce-zxgg6b47ac7mcizqaciuzkz5oe-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/c/1-2oe25244ccdoisiaqoyteowgce-zxgg6b net::ERR_ABORTED"
+      ],
+      "axe": [
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "nodes": 1,
+          "help": "Buttons must have discernible text"
+        },
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 20,
+          "help": "Elements must meet minimum color contrast ratio thresholds"
+        }
+      ]
+    },
+    {
+      "viewport": "phone",
+      "route": "/feedback",
+      "loadMs": 9237,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [
+        "FAILED https://1-gzj3kb3kletaswfi3bnnfyfz3y-dzf2ioxmfmdwpzrwmmkgz26dsi-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-gzj3kb3kletaswfi3bnnfyfz3y-dzf2ioxmfmdwpzrwmmkgz26dsi-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-gzj3kb3kletaswfi3bnnfyfz3y-dzf2ioxmfmdwpzrwmmkgz26dsi-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-gzj3kb3kletaswfi3bnnfyfz3y-dzf2ioxmfmdwpzrwmmkgz26dsi-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-gzj3kb3kletaswfi3bnnfyfz3y-dzf2ioxmfmdwpzrwmmkgz26dsi-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-gzj3kb3kletaswfi3bnnfyfz3y-dzf2ioxmfmdwpzrwmmkgz26dsi-p.client.protect.clerk.com:8443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-gzj3kb3kletaswfi3bnnfyfz3y-dzf2ioxmfmdwpzrwmmkgz26dsi-p.client.protect.clerk.com:2082/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-gzj3kb3kletaswfi3bnnfyfz3y-dzf2ioxmfmdwpzrwmmkgz26dsi-p.client.protect.clerk.com:992/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-gzj3kb3kletaswfi3bnnfyfz3y-dzf2ioxmfmdwpzrwmmkgz26dsi-p.client.protect.clerk.com:18443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-gzj3kb3kletaswfi3bnnfyfz3y-dzf2ioxmfmdwpzrwmmkgz26dsi-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/c/1-gzj3kb3kletaswfi3bnnfyfz3y-dzf2io net::ERR_ABORTED"
+      ],
+      "axe": [
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "nodes": 21,
+          "help": "Buttons must have discernible text"
+        },
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 19,
+          "help": "Elements must meet minimum color contrast ratio thresholds"
+        }
+      ]
+    },
+    {
+      "viewport": "phone",
+      "route": "/login",
+      "loadMs": 9645,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [
+        "FAILED https://1-l7ivf7lzn6mp4kbxhe4vytmr5y-7qcyazmjpd6vamj5cmaack5xri-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-l7ivf7lzn6mp4kbxhe4vytmr5y-7qcyazmjpd6vamj5cmaack5xri-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-l7ivf7lzn6mp4kbxhe4vytmr5y-7qcyazmjpd6vamj5cmaack5xri-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-l7ivf7lzn6mp4kbxhe4vytmr5y-7qcyazmjpd6vamj5cmaack5xri-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-l7ivf7lzn6mp4kbxhe4vytmr5y-7qcyazmjpd6vamj5cmaack5xri-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-l7ivf7lzn6mp4kbxhe4vytmr5y-7qcyazmjpd6vamj5cmaack5xri-p.client.protect.clerk.com:2082/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-l7ivf7lzn6mp4kbxhe4vytmr5y-7qcyazmjpd6vamj5cmaack5xri-p.client.protect.clerk.com:18443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-l7ivf7lzn6mp4kbxhe4vytmr5y-7qcyazmjpd6vamj5cmaack5xri-p.client.protect.clerk.com:8443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-l7ivf7lzn6mp4kbxhe4vytmr5y-7qcyazmjpd6vamj5cmaack5xri-p.client.protect.clerk.com:992/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-l7ivf7lzn6mp4kbxhe4vytmr5y-7qcyazmjpd6vamj5cmaack5xri-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/c/1-l7ivf7lzn6mp4kbxhe4vytmr5y-7qcyaz net::ERR_ABORTED"
+      ],
+      "axe": []
+    },
+    {
+      "viewport": "phone",
+      "route": "/signup",
+      "loadMs": 9661,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [
+        "FAILED https://1-zc6lifsba4pqs4z37pb3qoab5y-dhlgzg5qzzbqmq7hhrn4dwq4zy-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zc6lifsba4pqs4z37pb3qoab5y-dhlgzg5qzzbqmq7hhrn4dwq4zy-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zc6lifsba4pqs4z37pb3qoab5y-dhlgzg5qzzbqmq7hhrn4dwq4zy-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zc6lifsba4pqs4z37pb3qoab5y-dhlgzg5qzzbqmq7hhrn4dwq4zy-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zc6lifsba4pqs4z37pb3qoab5y-dhlgzg5qzzbqmq7hhrn4dwq4zy-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zc6lifsba4pqs4z37pb3qoab5y-dhlgzg5qzzbqmq7hhrn4dwq4zy-p.client.protect.clerk.com:2082/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zc6lifsba4pqs4z37pb3qoab5y-dhlgzg5qzzbqmq7hhrn4dwq4zy-p.client.protect.clerk.com:8443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zc6lifsba4pqs4z37pb3qoab5y-dhlgzg5qzzbqmq7hhrn4dwq4zy-p.client.protect.clerk.com:18443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zc6lifsba4pqs4z37pb3qoab5y-dhlgzg5qzzbqmq7hhrn4dwq4zy-p.client.protect.clerk.com:992/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-zc6lifsba4pqs4z37pb3qoab5y-dhlgzg5qzzbqmq7hhrn4dwq4zy-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/c/1-zc6lifsba4pqs4z37pb3qoab5y-dhlgzg net::ERR_ABORTED"
+      ],
+      "axe": []
+    },
+    {
+      "viewport": "phone",
+      "route": "/admin",
+      "loadMs": 10326,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [
+        "FAILED https://1-cvbzumfndhkpsublw6bfudq34i-dvcqsnuevqlr37yqpvzlsqexyu-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-cvbzumfndhkpsublw6bfudq34i-dvcqsnuevqlr37yqpvzlsqexyu-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-cvbzumfndhkpsublw6bfudq34i-dvcqsnuevqlr37yqpvzlsqexyu-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-cvbzumfndhkpsublw6bfudq34i-dvcqsnuevqlr37yqpvzlsqexyu-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-cvbzumfndhkpsublw6bfudq34i-dvcqsnuevqlr37yqpvzlsqexyu-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-cvbzumfndhkpsublw6bfudq34i-dvcqsnuevqlr37yqpvzlsqexyu-p.client.protect.clerk.com:18443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-cvbzumfndhkpsublw6bfudq34i-dvcqsnuevqlr37yqpvzlsqexyu-p.client.protect.clerk.com:992/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-cvbzumfndhkpsublw6bfudq34i-dvcqsnuevqlr37yqpvzlsqexyu-p.client.protect.clerk.com:2082/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-cvbzumfndhkpsublw6bfudq34i-dvcqsnuevqlr37yqpvzlsqexyu-p.client.protect.clerk.com:8443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-cvbzumfndhkpsublw6bfudq34i-dvcqsnuevqlr37yqpvzlsqexyu-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/c/1-cvbzumfndhkpsublw6bfudq34i-dvcqsn net::ERR_ABORTED"
+      ],
+      "axe": [
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "nodes": 1,
+          "help": "Buttons must have discernible text"
+        }
+      ]
+    },
+    {
+      "viewport": "phone",
+      "route": "/patient-dashboard",
+      "loadMs": 9637,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [
+        "FAILED https://1-c7ek52mcnvidze6hxcuefv3fbu-4zrniwq3jwohsfpehtjkobpmia-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-c7ek52mcnvidze6hxcuefv3fbu-4zrniwq3jwohsfpehtjkobpmia-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-c7ek52mcnvidze6hxcuefv3fbu-4zrniwq3jwohsfpehtjkobpmia-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-c7ek52mcnvidze6hxcuefv3fbu-4zrniwq3jwohsfpehtjkobpmia-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-c7ek52mcnvidze6hxcuefv3fbu-4zrniwq3jwohsfpehtjkobpmia-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-c7ek52mcnvidze6hxcuefv3fbu-4zrniwq3jwohsfpehtjkobpmia-p.client.protect.clerk.com:18443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-c7ek52mcnvidze6hxcuefv3fbu-4zrniwq3jwohsfpehtjkobpmia-p.client.protect.clerk.com:2082/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-c7ek52mcnvidze6hxcuefv3fbu-4zrniwq3jwohsfpehtjkobpmia-p.client.protect.clerk.com:992/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-c7ek52mcnvidze6hxcuefv3fbu-4zrniwq3jwohsfpehtjkobpmia-p.client.protect.clerk.com:8443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-c7ek52mcnvidze6hxcuefv3fbu-4zrniwq3jwohsfpehtjkobpmia-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/c/1-c7ek52mcnvidze6hxcuefv3fbu-4zrniw net::ERR_ABORTED"
+      ],
+      "axe": []
+    },
+    {
+      "viewport": "phone",
+      "route": "/this-page-does-not-exist",
+      "loadMs": 10865,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [
+        "404 Error: User attempted to access non-existent route: /this-page-does-not-exist"
+      ],
+      "pageErrors": [],
+      "failedRequests": [
+        "FAILED https://1-hfomdjczyhavis5hzwzvkb53da-wczx2b4bmtdtigmf44sfsuffou-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-hfomdjczyhavis5hzwzvkb53da-wczx2b4bmtdtigmf44sfsuffou-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-hfomdjczyhavis5hzwzvkb53da-wczx2b4bmtdtigmf44sfsuffou-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-hfomdjczyhavis5hzwzvkb53da-wczx2b4bmtdtigmf44sfsuffou-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-hfomdjczyhavis5hzwzvkb53da-wczx2b4bmtdtigmf44sfsuffou-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-hfomdjczyhavis5hzwzvkb53da-wczx2b4bmtdtigmf44sfsuffou-p.client.protect.clerk.com:2082/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-hfomdjczyhavis5hzwzvkb53da-wczx2b4bmtdtigmf44sfsuffou-p.client.protect.clerk.com:992/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-hfomdjczyhavis5hzwzvkb53da-wczx2b4bmtdtigmf44sfsuffou-p.client.protect.clerk.com:8443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-hfomdjczyhavis5hzwzvkb53da-wczx2b4bmtdtigmf44sfsuffou-p.client.protect.clerk.com:18443/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/probe net::ERR_ABORTED",
+        "FAILED https://1-hfomdjczyhavis5hzwzvkb53da-wczx2b4bmtdtigmf44sfsuffou-p.client.protect.clerk.com/ins_3MPSlaiUBbSyeCPGJs07hHrlQyf/c/1-hfomdjczyhavis5hzwzvkb53da-wczx2b net::ERR_ABORTED"
+      ],
+      "axe": [
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "nodes": 1,
+          "help": "Buttons must have discernible text"
+        },
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 1,
+          "help": "Elements must meet minimum color contrast ratio thresholds"
+        }
+      ]
+    }
+  ]
+}

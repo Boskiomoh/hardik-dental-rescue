@@ -3,3 +3,9 @@ project_id = "mmsmljkeedqfrbgsqipf"
 [functions.chat-with-gemini]
 # Allow public access - rate limiting is handled in the function itself
 verify_jwt = false
+
+# Expose the "before" schema too, so the untouched copy of the app can run
+# against the same project (see audit/build-before-schema.mjs).
+[api]
+schemas = ["public", "graphql_public", "before"]
+extra_search_path = ["public", "extensions"]

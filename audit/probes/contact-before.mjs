@@ -1,0 +1,23 @@
+// Sends the contact form like a visitor and screenshots the result.
+import { chromium } from "@playwright/test";
+const base = process.argv[2] ?? "http://localhost:8080";
+const out = process.argv[3] ?? "audit/results/before";
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+const errors = [];
+page.on("console", (m) => m.type() === "error" && errors.push(m.text().slice(0, 200)));
+await page.goto(base + "/contact", { waitUntil: "networkidle" });
+await page.fill("#contactFirstName", "Demo");
+await page.fill("#contactLastName", "Visitor");
+await page.fill("#contactEmail", "demo.visitor@example.com");
+await page.fill("#contactPhone", "5550101234");
+await page.fill("#contactSubject", "Question about whitening");
+await page.fill("#contactMessage", "Do you offer whitening on Saturdays? (audit test message)");
+await page.locator("form button[type=submit]").click();
+await page.waitForTimeout(3000);
+await page.locator("form button[type=submit]").scrollIntoViewIfNeeded();
+await page.screenshot({ path: `${out}/contact-result.png` });
+const toasts = await page.locator("[role=status], li[data-sonner-toast], ol li").allInnerTexts();
+console.log("toasts:", JSON.stringify(toasts.filter(Boolean).slice(0, 3)));
+console.log("console errors:", JSON.stringify(errors.slice(0, 4)));
+await browser.close();
