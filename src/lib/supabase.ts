@@ -104,18 +104,14 @@ export type Treatment = {
 // Helper functions for database operations
 export const patientService = {
   async getAll() {
-    console.log('🔍 Fetching patients from Supabase...')
     
     // Check authentication status
-    const { data: authData } = await supabase.auth.getUser()
-    console.log('🔐 Auth status:', authData?.user ? 'Authenticated' : 'Not authenticated')
     
     const { data, error } = await supabase
       .from('patients')
       .select('*')
       .order('created_at', { ascending: false })
     
-    console.log('📊 Patients query result:', { data, error, count: data?.length })
     
     if (error) {
       console.error('❌ Patient fetch error:', error)
@@ -160,11 +156,8 @@ export const patientService = {
 export const appointmentService = {
   async getAll() {
     try {
-      console.log('🔍 Fetching appointments from Supabase...')
       
       // Check authentication status
-      const { data: authData } = await supabase.auth.getUser()
-      console.log('🔐 Auth status for appointments:', authData?.user ? 'Authenticated' : 'Not authenticated')
       
       // Get appointments with patient data using a simpler approach
       const { data: appointments, error: appointmentsError } = await supabase
@@ -172,7 +165,6 @@ export const appointmentService = {
         .select('*')
         .order('appointment_date', { ascending: true })
       
-      console.log('📊 Appointments query result:', { appointments, appointmentsError, count: appointments?.length })
       
       if (appointmentsError) {
         console.error('Appointments error:', appointmentsError)
@@ -200,7 +192,6 @@ export const appointmentService = {
         }
       }) || []
 
-      console.log('Merged appointments data:', appointmentsWithPatients)
       return appointmentsWithPatients
     } catch (error) {
       console.error('Error in appointmentService.getAll:', error)

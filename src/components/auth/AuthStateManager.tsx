@@ -34,7 +34,6 @@ const AuthStateManager = ({ onAuthStateChange }: AuthStateManagerProps) => {
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        console.log('🔐 Auth event received:', event, session?.user?.id || 'no user');
         
         switch (event) {
           case 'SIGNED_IN':
@@ -61,7 +60,6 @@ const AuthStateManager = ({ onAuthStateChange }: AuthStateManagerProps) => {
             break;
             
           case 'TOKEN_REFRESHED':
-            console.log('Token refreshed successfully');
             break;
             
           case 'USER_UPDATED':
@@ -78,17 +76,14 @@ const AuthStateManager = ({ onAuthStateChange }: AuthStateManagerProps) => {
 
     // Check for existing session
     const getInitialSession = async () => {
-      console.log('🔍 Checking initial session...');
       try {
         const { data: { session }, error } = await supabase.auth.getSession();
         if (error) throw error;
         
         // Always call onAuthStateChange regardless of session state
         if (session?.user) {
-          console.log('✅ Initial session found:', session.user.id);
           onAuthStateChange(session.user);
         } else {
-          console.log('❌ No initial session found, showing login form');
           onAuthStateChange(null); // This was missing - causing infinite loading
         }
       } catch (error) {

@@ -89,14 +89,12 @@ export const useFeedback = () => {
       .on('postgres_changes', 
         { event: 'INSERT', schema: 'public', table: 'feedback' },
         (payload) => {
-          console.log('Feedback inserted:', payload);
           setFeedback(prev => [payload.new as Feedback, ...prev]);
         }
       )
       .on('postgres_changes', 
         { event: 'UPDATE', schema: 'public', table: 'feedback' },
         (payload) => {
-          console.log('Feedback updated:', payload);
           setFeedback(prev => prev.map(item => 
             item.id === payload.new.id ? payload.new as Feedback : item
           ));

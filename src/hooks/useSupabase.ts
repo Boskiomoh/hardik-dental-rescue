@@ -94,14 +94,12 @@ export const usePatients = () => {
       .on('postgres_changes', 
         { event: 'INSERT', schema: 'public', table: 'patients' },
         (payload) => {
-          console.log('Patient inserted:', payload);
           setPatients(prev => [payload.new as Patient, ...prev]);
         }
       )
       .on('postgres_changes', 
         { event: 'UPDATE', schema: 'public', table: 'patients' },
         (payload) => {
-          console.log('Patient updated:', payload);
           setPatients(prev => prev.map(patient => 
             patient.id === payload.new.id ? payload.new as Patient : patient
           ));
@@ -110,7 +108,6 @@ export const usePatients = () => {
       .on('postgres_changes', 
         { event: 'DELETE', schema: 'public', table: 'patients' },
         (payload) => {
-          console.log('Patient deleted:', payload);
           setPatients(prev => prev.filter(patient => patient.id !== payload.old.id));
         }
       )
@@ -142,7 +139,6 @@ export const useAppointments = () => {
     try {
       setLoading(true)
       const data = await appointmentService.getAll()
-      console.log('📅 Fetched appointments:', data) // Debug log
       setAppointments(data || [])
       setError(null)
     } catch (err) {
@@ -224,21 +220,18 @@ export const useAppointments = () => {
       .on('postgres_changes', 
         { event: 'INSERT', schema: 'public', table: 'appointments' },
         (payload) => {
-          console.log('Appointment inserted:', payload);
           fetchAppointments(); // Refetch to get populated data
         }
       )
       .on('postgres_changes', 
         { event: 'UPDATE', schema: 'public', table: 'appointments' },
         (payload) => {
-          console.log('Appointment updated:', payload);
           fetchAppointments(); // Refetch to get populated data
         }
       )
       .on('postgres_changes', 
         { event: 'DELETE', schema: 'public', table: 'appointments' },
         (payload) => {
-          console.log('Appointment deleted:', payload);
           setAppointments(prev => prev.filter(appointment => appointment.id !== payload.old.id));
         }
       )
@@ -269,7 +262,6 @@ export const useRealtimePatients = () => {
       .on('postgres_changes', 
         { event: '*', schema: 'public', table: 'patients' },
         (payload) => {
-          console.log('Patient change received:', payload)
           // Handle real-time updates
           if (payload.eventType === 'INSERT') {
             setPatients(prev => [payload.new as Patient, ...prev])
