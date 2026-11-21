@@ -9,54 +9,82 @@ import { Calendar, Clock, User, Phone, Mail, MessageSquare, CheckCircle } from "
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import QuickInfoCard from "@/components/common/QuickInfoCard";
+import { clinic } from "@/config/clinic";
+
+const toLocalIsoDate = (date: Date) => {
+  const offsetMs = date.getTimezoneOffset() * 60000;
+  return new Date(date.getTime() - offsetMs).toISOString().slice(0, 10);
+};
+
+const emptyForm = {
+  firstName: { value: '', isValid: false },
+  lastName: { value: '', isValid: false },
+  email: { value: '', isValid: false },
+  phone: { value: '', isValid: false },
+  date: '',
+  time: '',
+  service: '',
+  doctor: '',
+  message: ''
+};
 
 const DentalBooking = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [formValid, setFormValid] = useState(false);
-  const [formData, setFormData] = useState({
-    firstName: { value: '', isValid: false },
-    lastName: { value: '', isValid: false },
-    email: { value: '', isValid: false },
-    phone: { value: '', isValid: false },
-    date: '',
-    time: '',
-    service: '',
-    doctor: '',
-    message: ''
-  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [doctors, setDoctors] = useState<string[]>([]);
+  const [services, setServices] = useState<string[]>([]);
+  const [formData, setFormData] = useState(emptyForm);
   const { toast } = useToast();
   const [bookedSlots, setBookedSlots] = useState<string[]>([]);
   const [loadingSlots, setLoadingSlots] = useState(false);
+  const [slotsError, setSlotsError] = useState(false);
+  const today = toLocalIsoDate(new Date());
 
-  // Fetch booked time slots for the selected date and doctor
+  // Doctors and services come from the database, so the form only offers
+  // what the clinic actually has
   useEffect(() => {
-    const fetchBookedSlots = async () => {
-      if (!formData.date || !formData.doctor) {
-        setBookedSlots([]);
+    const fetchOptions = async () => {
+      const [doctorsResult, servicesResult] = await Promise.all([
+        supabase.from('doctors').select('name').eq('is_active', true).order('name'),
+        supabase.from('services').select('name').order('name'),
+      ]);
+      if (doctorsResult.error || servicesResult.error) {
+        toast({
+          title: "Couldn't load the booking options",
+          description: "Please refresh the page, or call us to book.",
+          variant: "destructive"
+        });
         return;
       }
-
-      setLoadingSlots(true);
-      try {
-        const { data, error } = await supabase
-          .from('appointments')
-          .select('appointment_time')
-          .eq('appointment_date', formData.date)
-          .eq('doctor', formData.doctor)
-          .not('status', 'eq', 'cancelled'); // Don't count cancelled appointments
-
-        if (error) throw error;
-
-        const slots = data?.map(apt => apt.appointment_time) || [];
-        setBookedSlots(slots);
-      } catch (error) {
-        console.error('Error fetching booked slots:', error);
-      } finally {
-        setLoadingSlots(false);
-      }
+      setDoctors(doctorsResult.data.map((doctor) => doctor.name));
+      setServices(servicesResult.data.map((service) => service.name));
     };
 
-    fetchBookedSlots();
+    fetchOptions();
+  }, [toast]);
+
+  // Fetch booked time slots for the selected date and doctor. The function
+  // returns times only, never who booked them.
+  const fetchBookedSlots = async (date: string, doctor: string) => {
+    if (!date || !doctor) {
+      setBookedSlots([]);
+      return;
+    }
+
+    setLoadingSlots(true);
+    setSlotsError(false);
+    const { data, error } = await supabase.rpc('get_booked_slots', { p_date: date, p_doctor: doctor });
+    if (error) {
+      setSlotsError(true);
+      setBookedSlots([]);
+    } else {
+      setBookedSlots(data ?? []);
+    }
+    setLoadingSlots(false);
+  };
+
+  useEffect(() => {
+    fetchBookedSlots(formData.date, formData.doctor);
   }, [formData.date, formData.doctor]);
 
   const updateFormField = (field: string, value: string, isValid: boolean) => {
@@ -95,69 +123,45 @@ const DentalBooking = () => {
       return;
     }
 
-    try {
-      // First, create or get the patient
-      let patientId;
-      
-      // Check if patient exists
-      const { data: existingPatient } = await supabase
-        .from('patients')
-        .select('id')
-        .eq('email', formData.email.value)
-        .single();
-      
-      if (existingPatient) {
-        patientId = existingPatient.id;
-      } else {
-        // Create new patient
-        const { data: newPatient, error: patientError } = await supabase
-          .from('patients')
-          .insert({
-            name: `${formData.firstName.value} ${formData.lastName.value}`,
-            email: formData.email.value,
-            phone: formData.phone.value,
-            date_of_birth: '1990-01-01', // Default value, should be collected in form
-            address: '', // Default value, should be collected in form
-            medical_history: formData.message || '',
-            insurance_info: '',
-            status: 'active'
-          })
-          .select()
-          .single();
-        
-        if (patientError) throw patientError;
-        patientId = newPatient.id;
-      }
-      
-      // Create appointment
-      const { error: appointmentError } = await supabase
-        .from('appointments')
-        .insert({
-          patient_id: patientId,
-          appointment_date: formData.date,
-          appointment_time: formData.time,
-          service_type: formData.service,
-          doctor: formData.doctor,
-          status: 'scheduled',
-          notes: formData.message || ''
-        });
-      
-      if (appointmentError) throw appointmentError;
-      
-      setIsSubmitted(true);
-      toast({
-        title: "Appointment Request Submitted!",
-        description: "We'll contact you within 24 hours to confirm your appointment.",
-      });
-      
-    } catch (error: any) {
-      console.error('Error booking appointment:', error);
+    setIsSubmitting(true);
+    // book_appointment saves the patient and the appointment in one step,
+    // without giving visitors read access to patient records
+    const { error } = await supabase.rpc('book_appointment', {
+      p_first_name: formData.firstName.value,
+      p_last_name: formData.lastName.value,
+      p_email: formData.email.value,
+      p_phone: formData.phone.value,
+      p_date: formData.date,
+      p_time: formData.time,
+      p_service: formData.service,
+      p_doctor: formData.doctor,
+      p_notes: formData.message,
+    });
+    setIsSubmitting(false);
+
+    if (error) {
+      // Messages raised by book_appointment are written for patients;
+      // anything else is a technical error and stays out of the UI
+      const isClinicMessage = error.code === '22023' || error.code === 'P0001';
       toast({
         title: "Booking Failed",
-        description: error.message || "Failed to book appointment. Please try again.",
+        description: isClinicMessage
+          ? error.message
+          : `Something went wrong on our side. Please try again, or call us on ${clinic.phone}.`,
         variant: "destructive"
       });
+      if (error.hint === 'slot_taken') {
+        updateFormValue('time', '');
+        fetchBookedSlots(formData.date, formData.doctor);
+      }
+      return;
     }
+
+    setIsSubmitted(true);
+    toast({
+      title: "Appointment Request Submitted!",
+      description: "We'll contact you within 24 hours to confirm your appointment.",
+    });
   };
 
   const timeSlots = Array.from({ length: 17 }, (_, i) => {
@@ -171,21 +175,11 @@ const DentalBooking = () => {
     return { value, label };
   });
 
-  const doctors = [
-    "Dr. Smith", "Dr. Johnson", "Dr. Williams", "Dr. Brown", "Dr. Davis", "Dr. Miller"
-  ];
-
-  const services = [
-    "General Checkup", "Teeth Cleaning", "Cosmetic Consultation", "Orthodontic Consultation",
-    "Emergency Care", "Oral Surgery Consultation", "Pediatric Checkup", "Other"
-  ];
-
   const bookingInfoItems = [
     { text: "All fields with * are required for processing", icon: "alert" as const },
-    { text: "Appointments can be scheduled from today onwards", icon: "clock" as const },
-    { text: "Doctor selection ensures proper resource allocation", icon: "users" as const },
-    { text: "Real-time updates will notify relevant staff", icon: "info" as const },
-    { text: "Confirmation will be sent via email and SMS", icon: "check" as const }
+    { text: "Appointments can be booked from today, Monday to Saturday", icon: "clock" as const },
+    { text: "Times already taken with your chosen doctor are greyed out", icon: "users" as const },
+    { text: "Our team will call or email you to confirm", icon: "check" as const }
   ];
 
   if (isSubmitted) {
@@ -201,23 +195,22 @@ const DentalBooking = () => {
                 Appointment Request Received!
               </h3>
               <p className="text-dental-gray mb-8 text-lg">
-                Thank you for choosing SmileCare Dental. Our team will contact you within 24 hours to confirm your appointment details.
+                Thank you for choosing {clinic.name}. Our team will contact you within 24 hours to confirm your appointment details.
               </p>
               <div className="grid md:grid-cols-2 gap-4 text-left bg-dental-blue-light rounded-xl p-6">
                 <div>
                   <h4 className="font-semibold text-dental-blue mb-2">What's Next?</h4>
                   <ul className="space-y-1 text-dental-gray">
-                    <li>• Confirmation call within 24 hours</li>
-                    <li>• Pre-appointment instructions via email</li>
-                    <li>• Reminder call 1 day before</li>
+                    <li>• We'll call or email you to confirm</li>
+                    <li>• Bring your insurance card, if you have one</li>
                   </ul>
                 </div>
                 <div>
                   <h4 className="font-semibold text-dental-blue mb-2">Need Immediate Help?</h4>
                   <ul className="space-y-1 text-dental-gray">
-                    <li>• Call: (555) 123-4567</li>
-                    <li>• Emergency: (555) 123-4568</li>
-                    <li>• Email: info@smilecare.com</li>
+                    <li>• Call: {clinic.phone}</li>
+                    <li>• Emergency: {clinic.emergencyPhone}</li>
+                    <li>• Email: {clinic.email}</li>
                   </ul>
                 </div>
               </div>
@@ -225,7 +218,12 @@ const DentalBooking = () => {
                 variant="dental" 
                 size="lg" 
                 className="mt-8 font-inter"
-                onClick={() => setIsSubmitted(false)}
+                onClick={() => {
+                  // The inputs remount empty, so the saved values must be cleared too
+                  setFormData(emptyForm);
+                  setBookedSlots([]);
+                  setIsSubmitted(false);
+                }}
               >
                 Book Another Appointment
               </Button>
@@ -303,22 +301,16 @@ const DentalBooking = () => {
                   onValueChange={(value, isValid) => updateFormField('email', value, isValid)}
                   className="border-dental-blue-light focus:border-dental-blue"
                 />
-                <div className="space-y-2">
-                  <Label htmlFor="phone" className="text-dental-blue font-medium">Phone Number</Label>
-                  <div className="flex">
-                    <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-dental-blue-light bg-muted text-muted-foreground text-sm">
-                      +91
-                    </span>
-                    <ValidatedInput
-                      id="phone"
-                      type="tel"
-                      placeholder="9876543210"
-                      validation={{ type: 'phone', required: true, minLength: 10 }}
-                      onValueChange={(value, isValid) => updateFormField('phone', value.startsWith('+91') ? value : `+91${value}`, isValid)}
-                      className="border-dental-blue-light focus:border-dental-blue rounded-l-none flex-1"
-                    />
-                  </div>
-                </div>
+                <ValidatedInput
+                  id="phone"
+                  label="Phone Number"
+                  type="tel"
+                  autoComplete="tel"
+                  placeholder="(555) 010-1234"
+                  validation={{ type: 'phone', required: true, minLength: 7 }}
+                  onValueChange={(value, isValid) => updateFormField('phone', value, isValid)}
+                  className="border-dental-blue-light focus:border-dental-blue"
+                />
               </div>
 
               {/* Appointment Details */}
@@ -328,14 +320,22 @@ const DentalBooking = () => {
                     <Calendar className="w-4 h-4" />
                     <span>Preferred Date</span>
                   </Label>
-                  <ValidatedInput 
-                    id="date" 
-                    type="date" 
+                  <ValidatedInput
+                    id="date"
+                    type="date"
+                    min={today}
                     validation={{ type: 'text', required: true }}
-                    onValueChange={(value) => updateFormValue('date', value)}
+                    onValueChange={(value) => {
+                      // ValidatedInput calls this after every render, so only
+                      // clear the chosen time when the date really changed
+                      setFormData(prev => prev.date === value ? prev : { ...prev, date: value, time: '' });
+                    }}
                     className="border-dental-blue-light focus:border-dental-blue"
                     showValidationIcons={false}
                   />
+                  {formData.date && new Date(`${formData.date}T00:00`).getDay() === 0 && (
+                    <p className="text-xs text-destructive">We're closed on Sundays. Please pick another day.</p>
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="time" className="text-dental-blue font-medium flex items-center space-x-2">
@@ -343,12 +343,13 @@ const DentalBooking = () => {
                     <span>Preferred Time</span>
                     {loadingSlots && <span className="text-xs text-muted-foreground">(Loading...)</span>}
                   </Label>
-                  <Select 
-                    required 
+                  <Select
+                    required
+                    value={formData.time}
                     onValueChange={(value) => updateFormValue('time', value)}
-                    disabled={!formData.date || !formData.doctor}
+                    disabled={!formData.date || !formData.doctor || loadingSlots}
                   >
-                    <SelectTrigger className="border-dental-blue-light focus:border-dental-blue">
+                    <SelectTrigger id="time" className="border-dental-blue-light focus:border-dental-blue">
                       <SelectValue placeholder={!formData.date || !formData.doctor ? "Select date & doctor first" : "Select time"} />
                     </SelectTrigger>
                     <SelectContent>
@@ -367,6 +368,11 @@ const DentalBooking = () => {
                       })}
                     </SelectContent>
                   </Select>
+                  {slotsError && (
+                    <p className="text-xs text-destructive">
+                      Couldn't check which times are free. You can still send the request.
+                    </p>
+                  )}
                   {formData.date && formData.doctor && bookedSlots.length > 0 && (
                     <p className="text-xs text-muted-foreground">
                       {bookedSlots.length} slot(s) already booked for this date with {formData.doctor}
@@ -378,7 +384,7 @@ const DentalBooking = () => {
                     Service Needed
                   </Label>
                   <Select required onValueChange={(value) => updateFormValue('service', value)}>
-                    <SelectTrigger className="border-dental-blue-light focus:border-dental-blue">
+                    <SelectTrigger id="service" className="border-dental-blue-light focus:border-dental-blue">
                       <SelectValue placeholder="Select service" />
                     </SelectTrigger>
                     <SelectContent>
@@ -399,7 +405,7 @@ const DentalBooking = () => {
                     // Reset time when doctor changes as slots may differ
                     updateFormValue('time', '');
                   }}>
-                    <SelectTrigger className="border-dental-blue-light focus:border-dental-blue">
+                    <SelectTrigger id="doctor" className="border-dental-blue-light focus:border-dental-blue">
                       <SelectValue placeholder="Select doctor" />
                     </SelectTrigger>
                     <SelectContent>
@@ -408,7 +414,6 @@ const DentalBooking = () => {
                           {doctor}
                         </SelectItem>
                       ))}
-                      <SelectItem value="manual">Other (specify in notes)</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -431,9 +436,9 @@ const DentalBooking = () => {
 
               {/* Submit Button */}
               <div className="text-center pt-6">
-                <Button type="submit" variant="dental" size="xl" className="font-inter w-full md:w-auto">
+                <Button type="submit" variant="dental" size="xl" className="font-inter w-full md:w-auto" disabled={isSubmitting}>
                   <Calendar className="w-5 h-5" />
-                  Request Appointment
+                  {isSubmitting ? "Sending request..." : "Request Appointment"}
                 </Button>
                 <p className="text-sm text-dental-gray mt-4">
                   We'll contact you within 24 hours to confirm your appointment
@@ -449,21 +454,21 @@ const DentalBooking = () => {
             <CardContent className="p-6">
               <Phone className="w-8 h-8 text-dental-blue mx-auto mb-3" />
               <h4 className="font-semibold text-foreground mb-2">Call Us</h4>
-              <p className="text-dental-gray">(555) 123-4567</p>
+              <p className="text-dental-gray">{clinic.phone}</p>
             </CardContent>
           </Card>
           <Card className="text-center border-dental-blue-light">
             <CardContent className="p-6">
               <Mail className="w-8 h-8 text-dental-mint mx-auto mb-3" />
               <h4 className="font-semibold text-foreground mb-2">Email Us</h4>
-              <p className="text-dental-gray">info@smilecare.com</p>
+              <p className="text-dental-gray">{clinic.email}</p>
             </CardContent>
           </Card>
           <Card className="text-center border-dental-blue-light">
             <CardContent className="p-6">
               <Clock className="w-8 h-8 text-dental-blue mx-auto mb-3" />
               <h4 className="font-semibold text-foreground mb-2">Hours</h4>
-              <p className="text-dental-gray">Mon-Fri: 8AM-6PM</p>
+              <p className="text-dental-gray">{clinic.hours[0]}</p>
             </CardContent>
           </Card>
         </div>
