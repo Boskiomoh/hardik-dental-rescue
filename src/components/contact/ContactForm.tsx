@@ -6,10 +6,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Send } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { useFeedback } from "@/hooks/useSupabaseExtended";
+import { feedbackService } from "@/lib/supabase";
+import { clinic } from "@/config/clinic";
 
 export const ContactForm = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSending, setIsSending] = useState(false);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -19,7 +21,6 @@ export const ContactForm = () => {
     message: ''
   });
   const { toast } = useToast();
-  const { addFeedback } = useFeedback();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,15 +52,15 @@ export const ContactForm = () => {
       return;
     }
 
+    setIsSending(true);
     try {
-      await addFeedback({
+      await feedbackService.submit({
         patient_name: `${formData.firstName.trim()} ${formData.lastName.trim()}`,
         patient_email: formData.email.trim(),
-        patient_id: null,
         message: `Subject: ${formData.subject.trim()}\nPhone: ${formData.phone.trim() || 'Not provided'}\n\nMessage:\n${formData.message.trim()}`,
-        rating: 5,
+        // Contact messages aren't reviews, so they carry no rating
+        rating: null,
         category: 'contact',
-        status: 'new'
       });
 
       setIsSubmitted(true);
@@ -78,13 +79,14 @@ export const ContactForm = () => {
       });
 
       setTimeout(() => setIsSubmitted(false), 3000);
-    } catch (error) {
-      console.error('Contact form submission error:', error);
+    } catch {
       toast({
         title: "Error",
-        description: "Failed to send message. Please try again.",
+        description: `Failed to send message. Please try again, or call us on ${clinic.phone}.`,
         variant: "destructive"
       });
+    } finally {
+      setIsSending(false);
     }
   };
 
@@ -197,9 +199,9 @@ export const ContactForm = () => {
             </div>
 
             <div className="text-center pt-4">
-              <Button type="submit" variant="dental" size="xl" className="font-inter w-full md:w-auto">
+              <Button type="submit" variant="dental" size="xl" className="font-inter w-full md:w-auto" disabled={isSending}>
                 <Send className="w-5 h-5" />
-                Send Message
+                {isSending ? "Sending..." : "Send Message"}
               </Button>
             </div>
           </form>

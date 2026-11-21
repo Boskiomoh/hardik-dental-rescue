@@ -83,7 +83,7 @@ const FeedbackManagement = () => {
   }, [actualFeedback, searchTerm, filterRating, filterStatus, filterCategory]);
 
   const averageRating = useMemo(() => {
-    const total = filteredFeedbacks.reduce((sum, feedbackItem) => sum + feedbackItem.rating, 0);
+    const total = filteredFeedbacks.reduce((sum, feedbackItem) => sum + (feedbackItem.rating ?? 0), 0);
     return filteredFeedbacks.length > 0 ? (total / filteredFeedbacks.length).toFixed(1) : "0.0";
   }, [filteredFeedbacks]);
 

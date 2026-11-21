@@ -19,7 +19,8 @@ export type Feedback = {
   updated_at: string
   patient_name: string
   patient_email: string
-  rating: number
+  // null for contact messages, which aren't reviews
+  rating: number | null
   message: string
   category: string
   status: 'new' | 'reviewed'
@@ -243,20 +244,23 @@ export const appointmentService = {
 // Feedback service
 export const feedbackService = {
   async getAll() {
-    console.log('🔍 Fetching feedback from Supabase...')
-    
     const { data, error } = await supabase
       .from('feedback')
       .select('*')
       .order('created_at', { ascending: false })
-    
-    console.log('📊 Feedback query result:', { data, error, count: data?.length })
-    
-    if (error) {
-      console.error('❌ Feedback fetch error:', error)
-      throw error
-    }
+
+    if (error) throw error
     return data as Feedback[]
+  },
+
+  // For visitors: saves without reading the row back, because visitors
+  // (correctly) can't read feedback. Used by the contact form.
+  async submit(feedback: Omit<Feedback, 'id' | 'created_at' | 'updated_at' | 'patient_id' | 'status'>) {
+    const { error } = await supabase
+      .from('feedback')
+      .insert([{ ...feedback, status: 'new' }])
+
+    if (error) throw error
   },
 
   async create(feedback: Omit<Feedback, 'id' | 'created_at' | 'updated_at'>) {
