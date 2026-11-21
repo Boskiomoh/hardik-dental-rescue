@@ -3,7 +3,7 @@ Allow: /
 
 # Hardik Dental Practice - Professional dental care services
 # Visit us online at: https://hardikdental.com
-# Phone: (808) 095-0921
+# Phone: (555) 123-4567
 # Services: General Dentistry, Cosmetic Dentistry, Orthodontics, Oral Surgery, Emergency Care, Pediatric Dentistry
 # Location: Professional Dental Practice
 

@@ -149,9 +149,9 @@ const DentalServices = () => {
               variant="dental-outline" 
               size="xl" 
               className="font-inter color-shift cursor-pointer"
-              onClick={() => window.location.href = 'tel:8080950921'}
+              onClick={() => window.location.href = 'tel:+15551234567'}
             >
-              Call (808) 095-0921
+              Call (555) 123-4567
             </Button>
           </div>
         </div>

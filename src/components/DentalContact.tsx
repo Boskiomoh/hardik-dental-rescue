@@ -27,17 +27,16 @@ const DentalContact = () => {
     {
       icon: Mail,
       title: "Email Us",
-      details: ["info@smilecare.com", "appointments@smilecare.com", "emergency@smilecare.com"],
+      details: ["hello@hardikdental.example", "appointments@hardikdental.example", "emergency@hardikdental.example"],
       action: "Send Email",
-      onClick: () => handleEmail("info@smilecare.com", "General Inquiry")
+      onClick: () => handleEmail("hello@hardikdental.example", "General Inquiry")
     }
   ];
 
   const officeHours = [
-    { day: "Monday - Friday", hours: "8:00 AM - 6:00 PM" },
-    { day: "Saturday", hours: "9:00 AM - 3:00 PM" },
-    { day: "Sunday", hours: "Emergency Only" },
-    { day: "Holidays", hours: "Emergency Only" }
+    { day: "Monday - Saturday", hours: "9:00 AM - 5:00 PM" },
+    { day: "Sunday", hours: "Closed" },
+    { day: "Holidays", hours: "Closed" }
   ];
 
   const contactInfoItems = [

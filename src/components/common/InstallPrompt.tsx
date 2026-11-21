@@ -49,7 +49,7 @@ const InstallPrompt = memo(() => {
         
         <CardContent className="pt-0">
           <p className="text-sm text-dental-gray mb-4">
-            Install DentalCare Pro for quick access to appointments and better offline experience.
+            Install Hardik Dental for quick access to appointments and better offline experience.
           </p>
           
           <div className="flex space-x-2">

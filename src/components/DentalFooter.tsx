@@ -139,14 +139,14 @@ const DentalFooter = () => {
                   <Phone className="w-5 h-5 text-dental-blue-light flex-shrink-0" />
                   <div>
                     <button 
-                      onClick={() => handlePhoneCall("8080950921")}
+                      onClick={() => handlePhoneCall("+15551234567")}
                       className="text-dental-blue-light hover:text-white transition-colors"
                     >
                       Main: (555) 123-4567
                     </button>
                     <br />
                     <button 
-                      onClick={() => handlePhoneCall("8080950921")}
+                      onClick={() => handlePhoneCall("+15551234568")}
                       className="text-dental-blue-light hover:text-white transition-colors"
                     >
                       Emergency: (555) 123-4568
@@ -157,19 +157,18 @@ const DentalFooter = () => {
                 <div className="flex items-center space-x-3">
                   <Mail className="w-5 h-5 text-dental-blue-light flex-shrink-0" />
                   <button 
-                    onClick={() => handleEmail("info@smilecare.com")}
+                    onClick={() => handleEmail("hello@hardikdental.example")}
                     className="text-dental-blue-light hover:text-white transition-colors"
                   >
-                    info@smilecare.com
+                    hello@hardikdental.example
                   </button>
                 </div>
                 
                 <div className="flex items-start space-x-3">
                   <Clock className="w-5 h-5 text-dental-blue-light mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-dental-blue-light">Mon-Fri: 8AM-6PM</p>
-                    <p className="text-dental-blue-light">Sat: 9AM-3PM</p>
-                    <p className="text-dental-blue-light">Sun: Emergency Only</p>
+                    <p className="text-dental-blue-light">Mon–Sat: 9AM–5PM</p>
+                    <p className="text-dental-blue-light">Sun: Closed</p>
                   </div>
                 </div>
               </div>

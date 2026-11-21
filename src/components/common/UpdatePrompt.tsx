@@ -45,7 +45,7 @@ const UpdatePrompt = memo(() => {
         
         <CardContent className="pt-0">
           <p className="text-sm text-dental-gray mb-4">
-            A new version of DentalCare Pro is available with improvements and bug fixes.
+            A new version of Hardik Dental is available with improvements and bug fixes.
           </p>
           
           <div className="flex space-x-2">

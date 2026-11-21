@@ -20,7 +20,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({
   type = 'business.business',
   structuredData
 }) => {
-  const siteTitle = 'DentalCare Pro';
+  const siteTitle = 'Hardik Dental';
   const fullTitle = title.includes(siteTitle) ? title : `${title} | ${siteTitle}`;
 
   const defaultStructuredData = {
@@ -32,7 +32,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({
     "logo": `${url}/logo.png`,
     "image": `${url}${image}`,
     "telephone": "+1-555-DENTAL",
-    "email": "info@dentalcarepro.com",
+    "email": "hello@hardikdental.example",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "123 Dental Street",

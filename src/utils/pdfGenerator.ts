@@ -14,7 +14,7 @@ export const generatePatientPDF = (data: PatientPDFData) => {
   // Header
   pdf.setFontSize(20)
   pdf.setTextColor(41, 128, 185) // Dental blue color
-  pdf.text('SmileCare Dental - Patient Report', 20, 30)
+  pdf.text('Hardik Dental - Patient Report', 20, 30)
   
   // Patient ID
   pdf.setFontSize(12)
@@ -180,7 +180,7 @@ export const generatePatientPDF = (data: PatientPDFData) => {
     pdf.setFontSize(8)
     pdf.setTextColor(128, 128, 128)
     pdf.text(`Page ${i} of ${pageCount}`, 180, 290)
-    pdf.text('SmileCare Dental - Confidential Patient Information', 20, 290)
+    pdf.text('Hardik Dental - Confidential Patient Information', 20, 290)
   }
   
   // Save the PDF

@@ -62,14 +62,14 @@ export const SmartDentalChatbot: React.FC = () => {
   // Comprehensive 350-Question Dataset
   const qaDataset: QADataset[] = [
     // Opening Hours Questions
-    { question: "What are your opening hours?", answer: "Our clinic is open Monday to Saturday from 9:00 AM to 6:00 PM.", category: "hours", keywords: ["opening", "hours", "open"], relatedQuestions: ["Are you open on weekends?", "What time do you close?", "Can I book an appointment?", "Do you have emergency services?", "Where are you located?"] },
-    { question: "Is the dentist open on weekends?", answer: "Yes, we are open on Saturdays from 9:00 AM to 2:00 PM. We are closed on Sundays.", category: "hours", keywords: ["weekends", "saturday", "sunday"], relatedQuestions: ["What are your opening hours?", "Can I book a weekend appointment?", "Do you have emergency services on weekends?", "What time do you close on Saturday?", "How do I book an appointment?"] },
-    { question: "What time does the dentist shop close?", answer: "We close at 6:00 PM on weekdays and 2:00 PM on Saturdays.", category: "hours", keywords: ["close", "closing", "time"], relatedQuestions: ["What are your opening hours?", "Are you open on weekends?", "How do I book an appointment?", "Do you have late appointments?", "Can I call after hours?"] },
+    { question: "What are your opening hours?", answer: "Our clinic is open Monday to Saturday from 9:00 AM to 5:00 PM.", category: "hours", keywords: ["opening", "hours", "open"], relatedQuestions: ["Are you open on weekends?", "What time do you close?", "Can I book an appointment?", "Do you have emergency services?", "Where are you located?"] },
+    { question: "Is the dentist open on weekends?", answer: "Yes, we are open on Saturdays from 9:00 AM to 5:00 PM. We are closed on Sundays.", category: "hours", keywords: ["weekends", "saturday", "sunday"], relatedQuestions: ["What are your opening hours?", "Can I book a weekend appointment?", "Do you have emergency services on weekends?", "What time do you close on Saturday?", "How do I book an appointment?"] },
+    { question: "What time does the dentist shop close?", answer: "We close at 5:00 PM, Monday to Saturday.", category: "hours", keywords: ["close", "closing", "time"], relatedQuestions: ["What are your opening hours?", "Are you open on weekends?", "How do I book an appointment?", "Do you have late appointments?", "Can I call after hours?"] },
     { question: "What time does the dentist shop open?", answer: "We open at 9:00 AM from Monday to Saturday.", category: "hours", keywords: ["open", "opening", "time"], relatedQuestions: ["What are your opening hours?", "Can I book an early appointment?", "Are you open on weekends?", "How do I contact you?", "Where are you located?"] },
-    { question: "Are you open on public holidays?", answer: "We are closed on major public holidays. Please call ahead to confirm holiday hours at (808) 095-0921.", category: "hours", keywords: ["holidays", "public", "closed"], relatedQuestions: ["What are your opening hours?", "Do you have emergency services?", "How do I contact you?", "Can I book an appointment?", "Which holidays are you closed?"] },
+    { question: "Are you open on public holidays?", answer: "We are closed on major public holidays. Please call ahead to confirm holiday hours at (555) 123-4567.", category: "hours", keywords: ["holidays", "public", "closed"], relatedQuestions: ["What are your opening hours?", "Do you have emergency services?", "How do I contact you?", "Can I book an appointment?", "Which holidays are you closed?"] },
 
     // Appointments & Booking
-    { question: "How can I book an appointment?", answer: "You can book an appointment by calling us at (808) 095-0921 or using our online booking system on our website.", category: "booking", keywords: ["book", "appointment", "schedule"], relatedQuestions: ["Can I book online?", "Do you accept walk-ins?", "What are your hours?", "How far in advance should I book?", "What should I bring?"] },
+    { question: "How can I book an appointment?", answer: "You can book an appointment by calling us at (555) 123-4567 or using our online booking system on our website.", category: "booking", keywords: ["book", "appointment", "schedule"], relatedQuestions: ["Can I book online?", "Do you accept walk-ins?", "What are your hours?", "How far in advance should I book?", "What should I bring?"] },
     { question: "Can I book an appointment online?", answer: "Yes, you can book your appointment online through our website 24/7.", category: "booking", keywords: ["online", "book", "website"], relatedQuestions: ["How do I book an appointment?", "Do you accept walk-ins?", "What services can I book online?", "How do I create an account?", "Can I reschedule online?"] },
     { question: "Do you accept walk-in patients?", answer: "We accept walk-ins, but we recommend booking in advance to guarantee your spot.", category: "booking", keywords: ["walk-in", "patients", "without appointment"], relatedQuestions: ["How do I book an appointment?", "Do you have same-day appointments?", "What are your hours?", "How long is the wait for walk-ins?", "Can I call ahead?"] },
 
@@ -82,18 +82,18 @@ export const SmartDentalChatbot: React.FC = () => {
     { question: "Can I get a tooth whitening treatment?", answer: "Yes, we offer in-office and take-home tooth whitening treatments.", category: "services", keywords: ["whitening", "teeth", "bleaching"], relatedQuestions: ["Do you provide cosmetic dentistry?", "How much does whitening cost?", "How long does whitening last?", "Is whitening safe?", "What's the difference between treatments?"] },
 
     // Insurance & Payment
-    { question: "What insurance do you accept?", answer: "We accept most major dental insurance plans. Please contact us for specific details at (808) 095-0921.", category: "insurance", keywords: ["insurance", "accept", "plans"], relatedQuestions: ["Do you offer payment plans?", "How much do treatments cost?", "Can I verify my benefits?", "What if I don't have insurance?", "Do you take cash?"] },
+    { question: "What insurance do you accept?", answer: "We accept most major dental insurance plans. Please contact us for specific details at (555) 123-4567.", category: "insurance", keywords: ["insurance", "accept", "plans"], relatedQuestions: ["Do you offer payment plans?", "How much do treatments cost?", "Can I verify my benefits?", "What if I don't have insurance?", "Do you take cash?"] },
     { question: "Do you accept cash payments?", answer: "Yes, we accept cash, credit/debit cards, and most insurance plans.", category: "payment", keywords: ["cash", "payment", "cards"], relatedQuestions: ["What insurance do you accept?", "Do you offer payment plans?", "What payment methods do you take?", "Can I pay by check?", "Do you offer financing?"] },
     { question: "Do you offer payment plans?", answer: "Yes, we offer flexible payment plans for select treatments. Please ask our staff for details.", category: "payment", keywords: ["payment", "plans", "financing"], relatedQuestions: ["What insurance do you accept?", "Do you accept cash?", "How much do treatments cost?", "What if I can't afford treatment?", "Can I pay in installments?"] },
 
     // Contact Information
-    { question: "How do I contact your office?", answer: "You can call us at (808) 095-0921, email us, or use the contact form on our website.", category: "contact", keywords: ["contact", "phone", "email"], relatedQuestions: ["What are your hours?", "Where are you located?", "Do you have emergency contact?", "How do I book an appointment?", "Can I text you?"] },
-    { question: "Where is your dentist shop located?", answer: "We are located at our main office. You can find us on Google Maps or call (808) 095-0921 for directions.", category: "location", keywords: ["location", "address", "where"], relatedQuestions: ["How do I contact you?", "Is parking available?", "Are you accessible by public transport?", "What are your hours?", "How do I get directions?"] },
+    { question: "How do I contact your office?", answer: "You can call us at (555) 123-4567, email us, or use the contact form on our website.", category: "contact", keywords: ["contact", "phone", "email"], relatedQuestions: ["What are your hours?", "Where are you located?", "Do you have emergency contact?", "How do I book an appointment?", "Can I text you?"] },
+    { question: "Where is your dentist shop located?", answer: "We are located at our main office. You can find us on Google Maps or call (555) 123-4567 for directions.", category: "location", keywords: ["location", "address", "where"], relatedQuestions: ["How do I contact you?", "Is parking available?", "Are you accessible by public transport?", "What are your hours?", "How do I get directions?"] },
     { question: "How do I get directions to your clinic?", answer: "Visit our website for a map and directions, or search for our clinic name on Google Maps.", category: "location", keywords: ["directions", "map", "navigation"], relatedQuestions: ["Where are you located?", "Is parking available?", "What are your hours?", "How do I contact you?", "Are you near public transport?"] },
     { question: "Is parking available?", answer: "Yes, we have dedicated parking spaces for our patients.", category: "location", keywords: ["parking", "spaces", "available"], relatedQuestions: ["Where are you located?", "How do I get directions?", "Is parking free?", "What are your hours?", "How do I contact you?"] },
 
     // Staff & Qualifications
-    { question: "Who are your dentists?", answer: "Our team includes experienced, licensed professionals. Call (808) 095-0921 to learn more about our dental team.", category: "staff", keywords: ["dentists", "doctors", "team"], relatedQuestions: ["What qualifications do your dentists have?", "How experienced are your dentists?", "Can I choose my dentist?", "Do you have specialists?", "What services do you provide?"] },
+    { question: "Who are your dentists?", answer: "Our team includes experienced, licensed professionals. Call (555) 123-4567 to learn more about our dental team.", category: "staff", keywords: ["dentists", "doctors", "team"], relatedQuestions: ["What qualifications do your dentists have?", "How experienced are your dentists?", "Can I choose my dentist?", "Do you have specialists?", "What services do you provide?"] },
     { question: "What qualifications do your dentists have?", answer: "Our dentists hold DDS or DMD degrees and are members of the national dental association.", category: "staff", keywords: ["qualifications", "degrees", "licensed"], relatedQuestions: ["Who are your dentists?", "How experienced are your dentists?", "Are your dentists board certified?", "What services do you provide?", "Can I meet the dentist first?"] },
     { question: "How many years of experience do your dentists have?", answer: "Our dentists have over 10 years of combined experience in dental care.", category: "staff", keywords: ["experience", "years", "expertise"], relatedQuestions: ["Who are your dentists?", "What qualifications do your dentists have?", "What services do you provide?", "Are your dentists specialists?", "Can I read reviews?"] },
 
@@ -103,8 +103,8 @@ export const SmartDentalChatbot: React.FC = () => {
     { question: "Can I bring my whole family?", answer: "Yes, we provide dental care for the whole family.", category: "family", keywords: ["family", "everyone", "all ages"], relatedQuestions: ["Do you treat children?", "Is your clinic kid-friendly?", "Can I schedule family appointments?", "What services do you provide?", "Do you offer family discounts?"] },
 
     // Emergency Care
-    { question: "Do you offer emergency dental care?", answer: "Yes, we offer emergency appointments for issues like pain, injury, or broken teeth. Call (808) 095-0921 immediately.", category: "emergency", keywords: ["emergency", "urgent", "pain"], relatedQuestions: ["What should I do for dental emergency?", "What are your emergency hours?", "How much do emergency visits cost?", "Can I get same-day appointments?", "What qualifies as emergency?"] },
-    { question: "What should I do if I have a dental emergency?", answer: "Call us immediately at (808) 095-0921 and we will arrange urgent care.", category: "emergency", keywords: ["emergency", "urgent", "immediate"], relatedQuestions: ["Do you offer emergency care?", "What qualifies as emergency?", "What are your emergency hours?", "Should I go to hospital?", "How quickly can you see me?"] },
+    { question: "Do you offer emergency dental care?", answer: "Yes, we offer emergency appointments for issues like pain, injury, or broken teeth. Call (555) 123-4567 immediately.", category: "emergency", keywords: ["emergency", "urgent", "pain"], relatedQuestions: ["What should I do for dental emergency?", "What are your emergency hours?", "How much do emergency visits cost?", "Can I get same-day appointments?", "What qualifies as emergency?"] },
+    { question: "What should I do if I have a dental emergency?", answer: "Call us immediately at (555) 123-4567 and we will arrange urgent care.", category: "emergency", keywords: ["emergency", "urgent", "immediate"], relatedQuestions: ["Do you offer emergency care?", "What qualifies as emergency?", "What are your emergency hours?", "Should I go to hospital?", "How quickly can you see me?"] },
 
     // Additional comprehensive questions from user's dataset (1-450)
     { question: "Do you treat gum disease?", answer: "Yes, we offer diagnosis and treatment for gum disease, including scaling and root planing.", category: "treatment", keywords: ["gum", "disease", "periodontal"], relatedQuestions: ["What causes gum disease?", "How is gum disease treated?", "Is gum disease painful?", "Can gum disease be prevented?", "Do you offer deep cleaning?"] },
@@ -165,8 +165,8 @@ export const SmartDentalChatbot: React.FC = () => {
       text: "Call Now",
       variant: "emergency",
       action: () => {
-        window.location.href = 'tel:8080950921';
-        toast("Calling (808) 095-0921...", { duration: 2000 });
+        window.location.href = 'tel:+15551234567';
+        toast("Calling (555) 123-4567...", { duration: 2000 });
       }
     },
     {
@@ -235,8 +235,8 @@ export const SmartDentalChatbot: React.FC = () => {
     try {
       const context = `You are a helpful dental assistant for Hardik Dental Practice. 
       Our services include: General Dentistry, Teeth Cleaning, Fillings, Root Canals, Braces, Cosmetic Dentistry, Teeth Whitening, Emergency Care.
-      Our hours: Monday-Saturday 9 AM - 6 PM, Saturday 9 AM - 2 PM.
-      Phone: (808) 095-0921
+      Our hours: Monday-Saturday 9 AM - 5 PM, closed Sunday.
+      Phone: (555) 123-4567
       Address: Main Office
       
       Provide helpful, professional responses about dental care, services, or general oral health information. Keep responses concise and informative.`;
@@ -250,7 +250,7 @@ export const SmartDentalChatbot: React.FC = () => {
         
         // Handle rate limiting response
         if (error.message?.includes('429') || error.message?.includes('Too Many Requests')) {
-          return "⏳ You've sent too many messages. Please wait a moment and try again. For urgent matters, call (808) 095-0921.";
+          return "⏳ You've sent too many messages. Please wait a moment and try again. For urgent matters, call (555) 123-4567.";
         }
         
         // Handle authentication errors
@@ -261,10 +261,10 @@ export const SmartDentalChatbot: React.FC = () => {
         throw error;
       }
 
-      return data?.response || "I'm here to help! For specific questions, please call us at (808) 095-0921.";
+      return data?.response || "I'm here to help! For specific questions, please call us at (555) 123-4567.";
     } catch (error) {
       console.error('❌ Gemini API error:', error);
-      return "I'm experiencing technical difficulties. Please call our office at (808) 095-0921 for assistance, or try asking your question again.";
+      return "I'm experiencing technical difficulties. Please call our office at (555) 123-4567 for assistance, or try asking your question again.";
     }
   };
 
@@ -294,7 +294,7 @@ export const SmartDentalChatbot: React.FC = () => {
       };
     } catch (error) {
       return {
-        response: "I'm here to help! For immediate assistance, please call us at (808) 095-0921. Our team is available Monday-Friday 9 AM - 6 PM, Saturday 10 AM - 2 PM.",
+        response: "I'm here to help! For immediate assistance, please call us at (555) 123-4567. Our team is available Monday to Saturday, 9 AM - 5 PM.",
         relatedQuestions: [
           "What are your hours?",
           "How do I contact you?",
@@ -343,7 +343,7 @@ export const SmartDentalChatbot: React.FC = () => {
       setTimeout(() => {
         const errorMessage: Message = {
           id: (Date.now() + 1).toString(),
-          content: "I apologize for the technical difficulty. Please call our office at (808) 095-0921 for immediate assistance.",
+          content: "I apologize for the technical difficulty. Please call our office at (555) 123-4567 for immediate assistance.",
           isBot: true,
           timestamp: new Date(),
         };

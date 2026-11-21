@@ -26,7 +26,7 @@ export const ContactInfoCard = ({ icon: IconComponent, title, details, action, o
           <h3 className="text-lg font-bold text-foreground mb-2 font-inter">{title}</h3>
           <div className="space-y-1">
             {details.map((detail, idx) => (
-              <p key={idx} className="text-dental-gray">{detail}</p>
+              <p key={idx} className="text-dental-gray break-words [overflow-wrap:anywhere]">{detail}</p>
             ))}
           </div>
           <Button 

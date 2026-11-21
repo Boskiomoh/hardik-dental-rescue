@@ -1,6 +1,6 @@
 {
-  "name": "DentalCare Pro - Professional Dental Services",
-  "short_name": "DentalCare Pro",
+  "name": "Hardik Dental - Professional Dental Services",
+  "short_name": "Hardik Dental",
   "description": "Professional dental care with modern technology and compassionate service. Book appointments, manage your dental health, and access your records.",
   "start_url": "/",
   "display": "standalone",
@@ -36,7 +36,7 @@
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "DentalCare Pro Dashboard"
+      "label": "Hardik Dental Dashboard"
     },
     {
       "src": "/screenshot-narrow.png",
