@@ -6,9 +6,10 @@ import { useAdminAuth } from "@/hooks/useAdminAuth";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import { StaffRoleProvider } from "@/hooks/useStaffRole";
 
 const Admin = () => {
-  const { user, isAdmin, loading, signIn, signOut } = useAdminAuth();
+  const { user, role, loading, signIn, signOut } = useAdminAuth();
 
   const handleLogin = async (email: string, password: string) => {
     return await signIn(email, password);
@@ -26,18 +27,18 @@ const Admin = () => {
     );
   }
 
-  // Show login page if not authenticated or not an admin
-  if (!user || !isAdmin) {
+  // Show login page if not signed in or not clinic staff
+  if (!user || !role) {
     return (
       <>
         <AdminLogin onLogin={handleLogin} />
-        {user && !isAdmin && (
+        {user && !role && (
           <div className="fixed bottom-4 right-4 max-w-md">
             <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
               <AlertTitle>Access Denied</AlertTitle>
               <AlertDescription>
-                You don't have admin privileges. Please contact your system administrator.
+                This account doesn't have clinic staff access. Ask your clinic admin to add you on the Team tab.
               </AlertDescription>
             </Alert>
           </div>
@@ -50,7 +51,9 @@ const Admin = () => {
     <div className="min-h-screen bg-background font-inter">
       <DentalNavbar />
       <div className="pt-16">
-        <AdminPanel user={user} onLogout={handleLogout} />
+        <StaffRoleProvider value={role}>
+          <AdminPanel user={user} role={role} onLogout={handleLogout} />
+        </StaffRoleProvider>
       </div>
       <DentalFooter />
     </div>

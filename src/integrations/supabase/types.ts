@@ -427,6 +427,23 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_list_team: {
+        Args: never
+        Returns: {
+          email: string
+          last_sign_in_at: string
+          roles: Database["public"]["Enums"]["app_role"][]
+          user_id: string
+        }[]
+      }
+      admin_set_role: {
+        Args: {
+          p_email: string
+          p_grant: boolean
+          p_role: Database["public"]["Enums"]["app_role"]
+        }
+        Returns: undefined
+      }
       book_appointment: {
         Args: {
           p_date: string

@@ -35,8 +35,10 @@ import PatientFinancialManager from "./PatientFinancialManager";
 import { generatePatientPDF } from "@/utils/pdfGenerator";
 import { usePatientServices, usePatientFinancials, useAllPatientAppointments } from "@/hooks/useSupabaseExtended";
 import EnhancedPatientPDFGenerator from "./EnhancedPatientPDFGenerator";
+import { useStaffRole } from "@/hooks/useStaffRole";
 
 const PatientManagementSupabase = () => {
+  const { can } = useStaffRole();
   const { toast } = useToast();
   const { patients, loading, addPatient, updatePatient, deletePatient } = usePatients();
   const { appointmentsByPatient, loading: appointmentsLoading } = useAllPatientAppointments();
@@ -581,15 +583,18 @@ ${appointmentInfo}
                             <MessageCircle className="w-4 h-4" />
                           </Button>
                           <EnhancedPatientPDFGenerator patient={patient} />
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleDelete(patient.id)}
-                            className="text-destructive hover:bg-destructive/10"
-                            title="Delete Patient"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
+                          {can("deleteRecords") && (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleDelete(patient.id)}
+                              className="text-destructive hover:bg-destructive/10"
+                              title="Delete Patient"
+                              aria-label={`Delete ${patient.name}`}
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -624,10 +629,10 @@ ${appointmentInfo}
           
           {selectedPatient && (
             <Tabs defaultValue="overview" className="flex-1 overflow-hidden">
-              <TabsList className="grid w-full grid-cols-4">
+              <TabsList className={`grid w-full ${can("viewBilling") ? "grid-cols-4" : "grid-cols-3"}`}>
                 <TabsTrigger value="overview">Overview</TabsTrigger>
                 <TabsTrigger value="services">Services</TabsTrigger>
-                <TabsTrigger value="financials">Financials</TabsTrigger>
+                {can("viewBilling") && <TabsTrigger value="financials">Financials</TabsTrigger>}
                 <TabsTrigger value="actions">Actions</TabsTrigger>
               </TabsList>
               
@@ -683,9 +688,11 @@ ${appointmentInfo}
                   <PatientServicesManager patientId={selectedPatient.id} />
                 </TabsContent>
                 
-                <TabsContent value="financials">
-                  <PatientFinancialManager patientId={selectedPatient.id} />
-                </TabsContent>
+                {can("viewBilling") && (
+                  <TabsContent value="financials">
+                    <PatientFinancialManager patientId={selectedPatient.id} />
+                  </TabsContent>
+                )}
                 
                 <TabsContent value="actions" className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

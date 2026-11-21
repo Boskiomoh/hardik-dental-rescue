@@ -1,0 +1,21 @@
+// Signs in at /login as the test patient and reads the dashboard.
+import { chromium } from "@playwright/test";
+import { readFileSync } from "node:fs";
+const env = Object.fromEntries(readFileSync(".env.test.local", "utf8").split("\n").filter((l) => l.includes("=")).map((l) => l.split(/=(.*)/s).slice(0, 2)));
+const base = process.argv[2] ?? "http://localhost:8081";
+const out = process.argv[3] ?? "audit/results/after/patient-portal";
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+await page.goto(base + "/login", { waitUntil: "networkidle" });
+await page.fill("#email", env.E2E_PATIENT_EMAIL);
+await page.fill("#password", env.E2E_PATIENT_PASSWORD);
+await page.locator("form button[type=submit]").first().click();
+await page.waitForURL("**/patient-dashboard", { timeout: 15000 });
+await page.getByText("Upcoming Appointments").waitFor();
+await page.waitForTimeout(2500);
+console.log("heading:", await page.locator("h1").first().innerText());
+console.log("upcoming:", JSON.stringify(await page.locator("h4").allInnerTexts()));
+console.log("history:", JSON.stringify(await page.locator("h5").allInnerTexts()));
+console.log("doctor lines:", JSON.stringify((await page.locator("p.text-sm.text-dental-gray").allInnerTexts()).filter((t) => t.includes("Dr.")).slice(0, 4)));
+await page.screenshot({ path: `${out}.png`, fullPage: true });
+await browser.close();

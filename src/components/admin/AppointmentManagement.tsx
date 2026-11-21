@@ -9,8 +9,10 @@ import { useToast } from "@/hooks/use-toast";
 import { useAppointments } from "@/hooks/useSupabase";
 import { useDoctors } from "@/hooks/useSupabaseExtended";
 import AppointmentScheduling from "./AppointmentScheduling";
+import { useStaffRole } from "@/hooks/useStaffRole";
 
 const AppointmentManagement = () => {
+  const { can } = useStaffRole();
   const { toast } = useToast();
   const { appointments, loading, updateAppointment, deleteAppointment } = useAppointments();
   const { doctors } = useDoctors();
@@ -280,14 +282,16 @@ Thank you for choosing Hardik Dental!`;
                       Send WhatsApp
                     </Button>
                     
-                    <Button
-                      size="sm"
-                      variant="destructive"
-                      onClick={() => handleDelete(appointment.id)}
-                    >
-                      <Trash2 className="w-4 h-4 mr-1" />
-                      Delete
-                    </Button>
+                    {can("deleteRecords") && (
+                      <Button
+                        size="sm"
+                        variant="destructive"
+                        onClick={() => handleDelete(appointment.id)}
+                      >
+                        <Trash2 className="w-4 h-4 mr-1" />
+                        Delete
+                      </Button>
+                    )}
                   </div>
                 </div>
               </CardContent>

@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { User, Session } from '@supabase/supabase-js';
+import { highestRole, type StaffRole } from '@/lib/permissions';
 
 interface AdminAuthState {
   user: User | null;
   session: Session | null;
-  isAdmin: boolean;
+  // Highest clinic role (admin, staff or doctor), or null for everyone else
+  role: StaffRole | null;
   loading: boolean;
   error: string | null;
 }
@@ -14,30 +16,20 @@ export const useAdminAuth = () => {
   const [authState, setAuthState] = useState<AdminAuthState>({
     user: null,
     session: null,
-    isAdmin: false,
+    role: null,
     loading: true,
     error: null,
   });
 
-  const checkAdminRole = async (userId: string): Promise<boolean> => {
-    try {
-      const { data, error } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', userId)
-        .eq('role', 'admin')
-        .single();
+  // RLS only returns the signed-in user's own role rows
+  const fetchStaffRole = async (userId: string): Promise<StaffRole | null> => {
+    const { data, error } = await supabase
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', userId);
 
-      if (error) {
-        console.error('Error checking admin role:', error);
-        return false;
-      }
-
-      return !!data;
-    } catch (error) {
-      console.error('Error checking admin role:', error);
-      return false;
-    }
+    if (error) return null;
+    return highestRole((data ?? []).map((row) => row.role));
   };
 
   useEffect(() => {
@@ -45,16 +37,16 @@ export const useAdminAuth = () => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         const user = session?.user ?? null;
-        let isAdmin = false;
+        let role: StaffRole | null = null;
 
         if (user) {
           // Use setTimeout to avoid deadlock
           setTimeout(async () => {
-            isAdmin = await checkAdminRole(user.id);
+            role = await fetchStaffRole(user.id);
             setAuthState({
               user,
               session,
-              isAdmin,
+              role,
               loading: false,
               error: null,
             });
@@ -63,7 +55,7 @@ export const useAdminAuth = () => {
           setAuthState({
             user: null,
             session: null,
-            isAdmin: false,
+            role: null,
             loading: false,
             error: null,
           });
@@ -74,16 +66,16 @@ export const useAdminAuth = () => {
     // THEN check for existing session
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       const user = session?.user ?? null;
-      let isAdmin = false;
+      let role: StaffRole | null = null;
 
       if (user) {
-        isAdmin = await checkAdminRole(user.id);
+        role = await fetchStaffRole(user.id);
       }
 
       setAuthState({
         user,
         session,
-        isAdmin,
+        role,
         loading: false,
         error: null,
       });
@@ -111,22 +103,22 @@ export const useAdminAuth = () => {
       }
 
       if (data.user) {
-        const isAdmin = await checkAdminRole(data.user.id);
+        const role = await fetchStaffRole(data.user.id);
         
-        if (!isAdmin) {
+        if (!role) {
           await supabase.auth.signOut();
           setAuthState(prev => ({
             ...prev,
             loading: false,
-            error: 'Unauthorized: Admin access required',
+            error: "This account doesn't have clinic staff access.",
           }));
-          return { success: false, error: 'Unauthorized: Admin access required' };
+          return { success: false, error: "This account doesn't have clinic staff access." };
         }
 
         setAuthState({
           user: data.user,
           session: data.session,
-          isAdmin: true,
+          role,
           loading: false,
           error: null,
         });
@@ -154,7 +146,7 @@ export const useAdminAuth = () => {
       setAuthState({
         user: null,
         session: null,
-        isAdmin: false,
+        role: null,
         loading: false,
         error: null,
       });

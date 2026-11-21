@@ -11,7 +11,8 @@ import {
   LogOut,
   User,
   MessageSquare,
-  Mail
+  Mail,
+  UserCog
 } from "lucide-react";
 import AdminDashboard from "./admin/AdminDashboard";
 import PatientManagementSupabase from "./admin/PatientManagementSupabase";
@@ -19,32 +20,43 @@ import AppointmentManagement from "./admin/AppointmentManagement";
 import ReportsAnalytics from "./admin/ReportsAnalytics";
 import FeedbackManagement from "./admin/FeedbackManagement";
 import MessagesManagement from "./admin/MessagesManagement";
+import TeamManagement from "./admin/TeamManagement";
 import type { User as AuthUser } from "@supabase/supabase-js";
+import { can, roleLabels, type Permission, type StaffRole } from "@/lib/permissions";
 
 interface AdminPanelProps {
   user: AuthUser;
+  role: StaffRole;
   onLogout?: () => void;
 }
 
-const AdminPanel = ({ user, onLogout }: AdminPanelProps) => {
+const AdminPanel = ({ user, role, onLogout }: AdminPanelProps) => {
   const [activeTab, setActiveTab] = useState("dashboard");
   const lastSignIn = user.last_sign_in_at
     ? new Date(user.last_sign_in_at).toLocaleString([], { dateStyle: "medium", timeStyle: "short" })
     : null;
 
-  const navigationItems = [
-    { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
-    { id: "patients", label: "Patient Management", icon: Users },
-    { id: "appointments", label: "Appointments", icon: Calendar },
-    { id: "messages", label: "Contact Messages", icon: Mail },
-    { id: "feedback", label: "Feedback", icon: MessageSquare },
-    { id: "reports", label: "Reports & Analytics", icon: BarChart3 }
+  const allNavigationItems: { id: string; label: string; icon: typeof Users; permission: Permission }[] = [
+    { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, permission: "viewDashboard" },
+    { id: "patients", label: "Patient Management", icon: Users, permission: "viewPatients" },
+    { id: "appointments", label: "Appointments", icon: Calendar, permission: "viewAppointments" },
+    { id: "messages", label: "Contact Messages", icon: Mail, permission: "viewMessages" },
+    { id: "feedback", label: "Feedback", icon: MessageSquare, permission: "viewFeedback" },
+    { id: "reports", label: "Reports & Analytics", icon: BarChart3, permission: "viewReports" },
+    { id: "team", label: "Team & Roles", icon: UserCog, permission: "manageTeam" }
   ];
+  // Each role only sees the tabs it can use
+  const navigationItems = allNavigationItems.filter((item) => can(role, item.permission));
+  const allowedTabs = navigationItems.map((item) => item.id);
+
+  const openTab = (tab: string) => {
+    if (allowedTabs.includes(tab)) setActiveTab(tab);
+  };
 
   const renderActiveComponent = () => {
-    switch (activeTab) {
+    switch (allowedTabs.includes(activeTab) ? activeTab : "dashboard") {
       case "dashboard":
-        return <AdminDashboard onNavigate={setActiveTab} />;
+        return <AdminDashboard onNavigate={openTab} />;
       case "patients":
         return <PatientManagementSupabase />;
       case "appointments":
@@ -55,8 +67,10 @@ const AdminPanel = ({ user, onLogout }: AdminPanelProps) => {
         return <FeedbackManagement />;
       case "reports":
         return <ReportsAnalytics />;
+      case "team":
+        return <TeamManagement currentUserId={user.id} />;
       default:
-        return <AdminDashboard onNavigate={setActiveTab} />;
+        return <AdminDashboard onNavigate={openTab} />;
     }
   };
 
@@ -91,7 +105,7 @@ const AdminPanel = ({ user, onLogout }: AdminPanelProps) => {
                 </div>
                 <div>
                   <p className="font-semibold text-foreground text-sm md:text-base break-all">Signed in as {user.email}</p>
-                  <p className="text-dental-gray text-xs md:text-sm">Role: Admin{lastSignIn && ` • Last sign-in: ${lastSignIn}`}</p>
+                  <p className="text-dental-gray text-xs md:text-sm">Role: {roleLabels[role]}{lastSignIn && ` • Last sign-in: ${lastSignIn}`}</p>
                 </div>
               </div>
               <Button variant="dental-outline" size="sm" onClick={handleLogout} className="text-xs md:text-sm">

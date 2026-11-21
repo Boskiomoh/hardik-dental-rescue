@@ -14,6 +14,7 @@ import {
   Eye
 } from "lucide-react";
 import { usePatients, useAppointments } from "@/hooks/useSupabase";
+import { useStaffRole } from "@/hooks/useStaffRole";
 
 interface AdminDashboardProps {
   // Opens another admin tab (used by the quick actions)
@@ -26,6 +27,7 @@ const localToday = () => {
 };
 
 const AdminDashboard = ({ onNavigate }: AdminDashboardProps) => {
+  const { can } = useStaffRole();
   const { patients, loading: patientsLoading } = usePatients();
   const { appointments, loading: appointmentsLoading } = useAppointments();
 
@@ -158,6 +160,8 @@ const AdminDashboard = ({ onNavigate }: AdminDashboardProps) => {
               <span className="text-sm font-medium">Schedule Appointment</span>
             </Button>
             
+            {can("viewReports") && (
+              <>
             <Button 
               variant="outline" 
               className="h-24 flex flex-col space-y-3 hover:bg-green-500 hover:text-white transition-all duration-200 border-green-200"
@@ -175,6 +179,8 @@ const AdminDashboard = ({ onNavigate }: AdminDashboardProps) => {
               <Eye className="w-6 h-6" />
               <span className="text-sm font-medium">View Analytics</span>
             </Button>
+              </>
+            )}
           </div>
         </CardContent>
       </Card>
