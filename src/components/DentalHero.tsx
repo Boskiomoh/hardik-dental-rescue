@@ -1,10 +1,32 @@
 import { Button } from "@/components/ui/button";
 import { Calendar, Star, Shield, Award } from "lucide-react";
 import { Link } from "react-router-dom";
-import Scene3D from "./3d/Scene3D";
-import { Suspense } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
+
+// three.js is ~600 kB. Load the decorative 3D scene in its own chunk, only on
+// wide screens, only after the page has loaded, and never with reduced motion.
+const Scene3D = lazy(() => import("./3d/Scene3D"));
+
+const useShow3D = () => {
+  const [show3D, setShow3D] = useState(false);
+  useEffect(() => {
+    const isWide = window.matchMedia("(min-width: 1024px)").matches;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!isWide || prefersReducedMotion) return;
+
+    const start = () => setShow3D(true);
+    if (document.readyState === "complete") {
+      const id = window.setTimeout(start, 0);
+      return () => window.clearTimeout(id);
+    }
+    window.addEventListener("load", start, { once: true });
+    return () => window.removeEventListener("load", start);
+  }, []);
+  return show3D;
+};
 
 const DentalHero = () => {
+  const show3D = useShow3D();
   return (
     <section id="home" className="relative pt-16 animated-bg min-h-screen flex items-center overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -81,15 +103,13 @@ const DentalHero = () => {
               <div className="bg-gradient-to-br from-dental-blue-light to-dental-mint-light rounded-3xl shadow-dental-card overflow-hidden mb-6 glow-effect">
                 <div className="aspect-video bg-gradient-to-br from-dental-blue/10 to-dental-mint/10 flex items-center justify-center relative">
                   {/* 3D DNA Animation */}
-                  <div className="absolute inset-0 z-10">
-                    <Suspense fallback={
-                      <div className="flex items-center justify-center h-full">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-dental-blue"></div>
-                      </div>
-                    }>
-                      <Scene3D autoRotate={true} />
-                    </Suspense>
-                  </div>
+                  {show3D && (
+                    <div className="absolute inset-0 z-10" aria-hidden="true">
+                      <Suspense fallback={null}>
+                        <Scene3D autoRotate={true} />
+                      </Suspense>
+                    </div>
+                  )}
                   
                   {/* Overlay Content */}
                   <div className="text-center p-8 relative z-20 bg-white/80 backdrop-blur-sm rounded-2xl m-4">
