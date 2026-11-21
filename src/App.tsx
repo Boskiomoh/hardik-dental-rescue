@@ -20,6 +20,7 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import NotFound from "./pages/NotFound";
 import PatientDashboardPage from "./pages/PatientDashboard";
+import ResetPassword from "./pages/ResetPassword";
 import Feedback from "./pages/Feedback";
 
 // Initialize QueryClient once outside component
@@ -51,6 +52,7 @@ const App = () => (
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/patient-dashboard" element={<PatientDashboardPage />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/feedback" element={<Feedback />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

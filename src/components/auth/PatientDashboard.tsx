@@ -2,173 +2,126 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, User, Phone, Mail, Clock, FileText, LogOut, Settings } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Calendar, User, Phone, Mail, Clock, FileText, LogOut } from "lucide-react";
+import type { User as AuthUser } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
+import type { Tables } from "@/integrations/supabase/types";
 import { useNavigate } from "react-router-dom";
 import DentalNavbar from "@/components/DentalNavbar";
 import DentalFooter from "@/components/DentalFooter";
 import { LoadingSkeleton } from "@/components/ui/loading-skeleton";
 
 interface PatientDashboardProps {
-  user: any;
+  user: AuthUser;
   onLogout: () => void;
 }
 
+type Appointment = Tables<"appointments">;
+
+const todayIso = () => {
+  const now = new Date();
+  return new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+};
+
+// "2026-11-23" is a calendar date; parse it as local midnight, not UTC
+const formatDate = (isoDate: string) => new Date(`${isoDate}T00:00`).toLocaleDateString();
+const formatTime = (time: string) =>
+  new Date(`1970-01-01T${time}`).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+
 const PatientDashboard = ({ user, onLogout }: PatientDashboardProps) => {
-  const [appointments, setAppointments] = useState<any[]>([]);
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [hasPatientRecord, setHasPatientRecord] = useState(true);
   const [loading, setLoading] = useState(true);
-  const { toast } = useToast();
+  const [loadError, setLoadError] = useState(false);
+  const [showAllHistory, setShowAllHistory] = useState(false);
   const navigate = useNavigate();
+
+  const fullName = (user.user_metadata?.full_name as string | undefined) || user.email;
+  const phone = user.user_metadata?.phone as string | undefined;
 
   useEffect(() => {
     fetchUserAppointments();
-  }, [user]);
+  }, [user.id]);
 
+  // Access rules only return this user's own patient record and appointments,
+  // so no email filter is needed (or trusted)
   const fetchUserAppointments = async () => {
-    try {
-      setLoading(true);
-      
-      const userEmail = user?.emailAddresses?.[0]?.emailAddress || user?.primaryEmailAddress?.emailAddress;
-      
-      if (!userEmail) {
-        console.error('No email found for user');
-        setLoading(false);
-        return;
-      }
+    setLoading(true);
+    setLoadError(false);
 
-      // First, check if patient exists in our database
-      const { data: patients, error: patientError } = await supabase
-        .from('patients')
-        .select('id, name, email')
-        .eq('email', userEmail)
-        .limit(1);
+    const { data: patient, error: patientError } = await supabase
+      .from('patients')
+      .select('id')
+      .maybeSingle();
 
-      if (patientError) {
-        console.error('Error fetching patient:', patientError);
-        toast({
-          title: "Error",
-          description: "Failed to load patient information",
-          variant: "destructive",
-        });
-        setLoading(false);
-        return;
-      }
-
-      if (!patients || patients.length === 0) {
-        // Patient doesn't exist, create them
-        const newPatient = {
-          name: user?.fullName || user?.firstName + ' ' + user?.lastName || 'Unknown',
-          email: userEmail,
-          phone: user?.phoneNumbers?.[0]?.phoneNumber || '',
-          date_of_birth: '1990-01-01', // Default date, should be updated by patient
-          address: '',
-          medical_history: '',
-          insurance_info: '',
-          status: 'active' as const
-        };
-
-        const { data: createdPatient, error: createError } = await supabase
-          .from('patients')
-          .insert([newPatient])
-          .select()
-          .single();
-
-        if (createError) {
-          console.error('Error creating patient:', createError);
-          toast({
-            title: "Error",
-            description: "Failed to create patient profile",
-            variant: "destructive",
-          });
-          setLoading(false);
-          return;
-        }
-
-        console.log('Created new patient:', createdPatient);
-      }
-
-      // Now get appointments for this patient
-      const { data: appointments, error } = await supabase
-        .from('appointments')
-        .select('*')
-        .in('patient_id', patients?.map(p => p.id) || [])
-        .order('appointment_date', { ascending: true });
-
-      if (error) {
-        console.error('Error fetching appointments:', error);
-        toast({
-          title: "Error",
-          description: "Failed to load appointments",
-          variant: "destructive",
-        });
-      } else {
-        setAppointments(appointments || []);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      toast({
-        title: "Error",
-        description: "Failed to load appointments",
-        variant: "destructive",
-      });
-    } finally {
+    if (patientError) {
+      setLoadError(true);
       setLoading(false);
+      return;
     }
+
+    if (!patient) {
+      // No booking has been made with this email yet
+      setHasPatientRecord(false);
+      setAppointments([]);
+      setLoading(false);
+      return;
+    }
+
+    setHasPatientRecord(true);
+    const { data, error } = await supabase
+      .from('appointments')
+      .select('*')
+      .eq('patient_id', patient.id)
+      .order('appointment_date', { ascending: true })
+      .order('appointment_time', { ascending: true });
+
+    if (error) {
+      setLoadError(true);
+    } else {
+      setAppointments(data ?? []);
+    }
+    setLoading(false);
   };
 
-  const handleLogout = async () => {
-    try {
-      // For Clerk, we just call the onLogout function
-      toast({
-        title: "Logged Out",
-        description: "You have been successfully logged out.",
-      });
-      onLogout();
-    } catch (error) {
-      toast({
-        title: "Logout Error",
-        description: "There was an error logging out. Please try again.",
-        variant: "destructive"
-      });
-    }
-  };
-
-  const upcomingAppointments = appointments.filter(apt => 
-    new Date(apt.appointment_date) >= new Date() && apt.status === 'scheduled'
+  const today = todayIso();
+  const upcomingAppointments = appointments.filter(apt =>
+    apt.appointment_date >= today && apt.status === 'scheduled'
   );
 
-  const pastAppointments = appointments.filter(apt => 
-    new Date(apt.appointment_date) < new Date() || apt.status === 'completed'
-  );
+  const pastAppointments = appointments
+    .filter(apt => apt.appointment_date < today || apt.status !== 'scheduled')
+    .reverse();
+  const visibleHistory = showAllHistory ? pastAppointments : pastAppointments.slice(0, 6);
 
   return (
     <div className="min-h-screen bg-background font-inter">
       <DentalNavbar />
-      
+
       <div className="pt-16 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
             <div>
               <h1 className="text-3xl font-bold text-foreground font-inter">
-                Welcome, {user?.fullName || user?.firstName || user?.emailAddresses?.[0]?.emailAddress}
+                Welcome, {fullName}
               </h1>
               <p className="text-dental-gray mt-2">
                 Manage your appointments and dental records
               </p>
             </div>
-            <div className="flex space-x-3">
-              <Button variant="outline" size="sm">
-                <Settings className="h-4 w-4 mr-2" />
-                Settings
-              </Button>
-              <Button variant="outline" size="sm" onClick={handleLogout}>
-                <LogOut className="h-4 w-4 mr-2" />
-                Logout
-              </Button>
-            </div>
+            <Button variant="outline" size="sm" onClick={onLogout}>
+              <LogOut className="h-4 w-4 mr-2" />
+              Logout
+            </Button>
           </div>
+
+          {loadError && (
+            <div role="alert" className="mb-8 rounded-lg border border-destructive/40 bg-destructive/5 p-4 flex flex-wrap items-center justify-between gap-3">
+              <p className="text-sm text-destructive">We couldn't load your appointments.</p>
+              <Button variant="outline" size="sm" onClick={fetchUserAppointments}>Try again</Button>
+            </div>
+          )}
 
           <div className="grid lg:grid-cols-3 gap-8">
             {/* User Profile Card */}
@@ -182,18 +135,18 @@ const PatientDashboard = ({ user, onLogout }: PatientDashboardProps) => {
               <CardContent className="space-y-4">
                 <div className="flex items-center space-x-3">
                   <Mail className="h-4 w-4 text-dental-gray" />
-                  <span className="text-sm">{user?.emailAddresses?.[0]?.emailAddress || user?.primaryEmailAddress?.emailAddress}</span>
+                  <span className="text-sm break-all">{user.email}</span>
                 </div>
-                {user?.phoneNumbers?.[0]?.phoneNumber && (
+                {phone && (
                   <div className="flex items-center space-x-3">
                     <Phone className="h-4 w-4 text-dental-gray" />
-                    <span className="text-sm">{user.phoneNumbers[0].phoneNumber}</span>
+                    <span className="text-sm">{phone}</span>
                   </div>
                 )}
                 <div className="pt-4">
-                  <Button 
-                    variant="dental" 
-                    size="sm" 
+                  <Button
+                    variant="dental"
+                    size="sm"
                     className="w-full"
                     onClick={() => navigate('/booking')}
                   >
@@ -222,15 +175,15 @@ const PatientDashboard = ({ user, onLogout }: PatientDashboardProps) => {
                         <div className="flex items-center justify-between">
                           <div>
                             <h4 className="font-semibold text-foreground">{appointment.service_type}</h4>
-                            <p className="text-sm text-dental-gray">Dr. {appointment.doctor}</p>
+                            <p className="text-sm text-dental-gray">{appointment.doctor}</p>
                             <div className="flex items-center space-x-4 mt-2">
                               <div className="flex items-center space-x-1">
                                 <Calendar className="h-4 w-4 text-dental-gray" />
-                                <span className="text-sm">{new Date(appointment.appointment_date).toLocaleDateString()}</span>
+                                <span className="text-sm">{formatDate(appointment.appointment_date)}</span>
                               </div>
                               <div className="flex items-center space-x-1">
                                 <Clock className="h-4 w-4 text-dental-gray" />
-                                <span className="text-sm">{appointment.appointment_time}</span>
+                                <span className="text-sm">{formatTime(appointment.appointment_time)}</span>
                               </div>
                             </div>
                           </div>
@@ -249,10 +202,14 @@ const PatientDashboard = ({ user, onLogout }: PatientDashboardProps) => {
                 ) : (
                   <div className="text-center py-8">
                     <Calendar className="h-12 w-12 text-dental-gray mx-auto mb-4" />
-                    <p className="text-dental-gray">No upcoming appointments</p>
-                    <Button 
-                      variant="dental" 
-                      size="sm" 
+                    <p className="text-dental-gray">
+                      {hasPatientRecord
+                        ? "No upcoming appointments"
+                        : `No bookings found for ${user.email} yet. Bookings made with this email will show up here.`}
+                    </p>
+                    <Button
+                      variant="dental"
+                      size="sm"
                       className="mt-4"
                       onClick={() => navigate('/booking')}
                     >
@@ -274,28 +231,28 @@ const PatientDashboard = ({ user, onLogout }: PatientDashboardProps) => {
                 </CardHeader>
                 <CardContent>
                   <div className="grid md:grid-cols-2 gap-4">
-                    {pastAppointments.slice(0, 6).map((appointment) => (
+                    {visibleHistory.map((appointment) => (
                       <div key={appointment.id} className="border rounded-lg p-4">
                         <div className="flex items-center justify-between mb-2">
                           <h5 className="font-medium text-foreground">{appointment.service_type}</h5>
-                          <Badge 
+                          <Badge
                             variant={appointment.status === 'completed' ? 'default' : 'secondary'}
                             className={appointment.status === 'completed' ? 'bg-green-100 text-green-800' : ''}
                           >
                             {appointment.status}
                           </Badge>
                         </div>
-                        <p className="text-sm text-dental-gray">Dr. {appointment.doctor}</p>
+                        <p className="text-sm text-dental-gray">{appointment.doctor}</p>
                         <p className="text-sm text-dental-gray">
-                          {new Date(appointment.appointment_date).toLocaleDateString()} at {appointment.appointment_time}
+                          {formatDate(appointment.appointment_date)} at {formatTime(appointment.appointment_time)}
                         </p>
                       </div>
                     ))}
                   </div>
                   {pastAppointments.length > 6 && (
                     <div className="text-center mt-4">
-                      <Button variant="outline" size="sm">
-                        View All History
+                      <Button variant="outline" size="sm" onClick={() => setShowAllHistory((shown) => !shown)}>
+                        {showAllHistory ? "Show Less" : "View All History"}
                       </Button>
                     </div>
                   )}
@@ -305,7 +262,7 @@ const PatientDashboard = ({ user, onLogout }: PatientDashboardProps) => {
           </div>
         </div>
       </div>
-      
+
       <DentalFooter />
     </div>
   );

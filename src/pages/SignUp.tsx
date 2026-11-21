@@ -1,7 +1,9 @@
-import ClerkSignUpForm from "@/components/auth/ClerkSignUpForm";
+import { useNavigate } from "react-router-dom";
+import LoginForm from "@/components/auth/LoginForm";
 
 const SignUp = () => {
-  return <ClerkSignUpForm />;
+  const navigate = useNavigate();
+  return <LoginForm defaultTab="signup" onLogin={() => navigate("/patient-dashboard")} />;
 };
 
 export default SignUp;

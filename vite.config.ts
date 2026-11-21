@@ -20,7 +20,6 @@ export default defineConfig(({ mode }) => ({
     },
   },
   optimizeDeps: {
-    exclude: ['@clerk/clerk-react'],
     include: ['react', 'react-dom', '@tanstack/react-query', 'react-router-dom']
   },
   build: {

@@ -4,20 +4,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Separator } from "@/components/ui/separator";
-import { Shield, Eye, EyeOff, User, Mail, Phone, Github, Linkedin } from "lucide-react";
+import { Shield, Eye, EyeOff, User, Mail, Phone } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
+import type { User as AuthUser } from "@supabase/supabase-js";
 
 interface LoginFormProps {
-  onLogin?: (user: any) => void;
+  onLogin?: (user: AuthUser) => void;
+  defaultTab?: "login" | "signup";
 }
 
-const LoginForm = ({ onLogin }: LoginFormProps) => {
+const LoginForm = ({ onLogin, defaultTab = "login" }: LoginFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [activeTab, setActiveTab] = useState("login");
+  const [activeTab, setActiveTab] = useState<string>(defaultTab);
   const { toast } = useToast();
 
   // Login form state
@@ -94,7 +95,7 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
     setIsLoading(true);
 
     try {
-      const redirectUrl = `${window.location.origin}/`;
+      const redirectUrl = `${window.location.origin}/patient-dashboard`;
       
       const { data, error } = await supabase.auth.signUp({
         email: signupData.email,
@@ -110,9 +111,15 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
 
       if (error) throw error;
 
+      // With email confirmation on, there's no session until the link is clicked
+      if (data.session && data.user) {
+        onLogin?.(data.user);
+        return;
+      }
+
       toast({
         title: "Account Created",
-        description: "Please check your email to verify your account.",
+        description: "Please check your email and click the link to verify your account.",
       });
 
       setActiveTab("login");
@@ -154,34 +161,6 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
       setIsLoading(false);
     }
   };
-
-  const handleSocialLogin = async (provider: 'github' | 'linkedin_oidc' | 'google') => {
-    setIsLoading(true);
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider,
-        options: {
-          redirectTo: `${window.location.origin}/`
-        }
-      });
-
-      if (error) throw error;
-
-      toast({
-        title: "Redirecting...",
-        description: `Redirecting to ${provider === 'github' ? 'GitHub' : provider === 'linkedin_oidc' ? 'LinkedIn' : 'Google'} for authentication.`,
-      });
-
-    } catch (error: any) {
-      toast({
-        title: "Authentication Failed",
-        description: error.message || "Failed to authenticate. Please try again.",
-        variant: "destructive"
-      });
-      setIsLoading(false);
-    }
-  };
-
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-dental-blue-light via-white to-dental-mint-light flex items-center justify-center p-4">
@@ -283,57 +262,6 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
                   )}
                 </Button>
               </form>
-
-              <div className="mt-6">
-                <div className="relative">
-                  <div className="absolute inset-0 flex items-center">
-                    <Separator className="w-full" />
-                  </div>
-                  <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-background px-2 text-dental-gray">Or continue with</span>
-                  </div>
-                </div>
-
-                <div className="space-y-3 mt-6">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => handleSocialLogin('google')}
-                    disabled={isLoading}
-                    className="w-full border-dental-blue-light hover:bg-dental-blue-light"
-                  >
-                    <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24">
-                      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                    </svg>
-                    Continue with Google
-                  </Button>
-                  <div className="grid grid-cols-2 gap-3">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => handleSocialLogin('github')}
-                      disabled={isLoading}
-                      className="w-full border-dental-blue-light hover:bg-dental-blue-light"
-                    >
-                      <Github className="w-4 h-4 mr-2" />
-                      GitHub
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => handleSocialLogin('linkedin_oidc')}
-                      disabled={isLoading}
-                      className="w-full border-dental-blue-light hover:bg-dental-blue-light"
-                    >
-                      <Linkedin className="w-4 h-4 mr-2" />
-                      LinkedIn
-                    </Button>
-                  </div>
-                </div>
-              </div>
             </TabsContent>
 
 
@@ -379,17 +307,16 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
                   <Label htmlFor="phone" className="text-dental-gray font-medium">
                     Phone Number
                   </Label>
-                  <div className="flex">
-                    <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-dental-blue-light bg-muted text-muted-foreground text-sm">
-                      <Phone className="h-4 w-4 mr-1" />+91
-                    </span>
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-3 h-4 w-4 text-dental-gray" />
                     <Input
                       id="phone"
                       type="tel"
-                      value={signupData.phone.replace(/^\+91/, '')}
-                      onChange={(e) => setSignupData({...signupData, phone: `+91${e.target.value.replace(/^\+91/, '')}`})}
-                      placeholder="9876543210"
-                      className="border-dental-blue-light focus:border-dental-blue rounded-l-none"
+                      autoComplete="tel"
+                      value={signupData.phone}
+                      onChange={(e) => setSignupData({...signupData, phone: e.target.value})}
+                      placeholder="(555) 010-1234"
+                      className="pl-10 border-dental-blue-light focus:border-dental-blue"
                       required
                     />
                   </div>
