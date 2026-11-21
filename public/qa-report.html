@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QA Report: Hardik Dental</title>
+  <meta name="description" content="QA audit, fixes and new features for a Lovable-generated dental clinic app: before and after results.">
+  <meta name="robots" content="noindex">
+  <style>
+    :root { --text: #0f172a; --muted: #475569; --line: #e2e8f0; --bg: #f8fafc; --card: #fff; --accent: #0b5fe0; --good: #166534; --good-bg: #dcfce7; --bad: #991b1b; --bad-bg: #fee2e2; }
+    @media (prefers-color-scheme: dark) {
+      :root { --text: #e2e8f0; --muted: #94a3b8; --line: #1e293b; --bg: #0b1120; --card: #111827; --accent: #60a5fa; --good: #86efac; --good-bg: #14532d; --bad: #fca5a5; --bad-bg: #450a0a; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text); background: var(--bg); line-height: 1.55; }
+    main { max-width: 960px; margin: 0 auto; padding: 48px 16px 80px; }
+    .eyebrow { color: var(--accent); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; font-size: 14px; }
+    h1 { font-size: clamp(30px, 5vw, 44px); line-height: 1.1; margin: 8px 0 16px; letter-spacing: -0.02em; }
+    h2 { font-size: 24px; margin: 48px 0 12px; }
+    p, li { color: var(--muted); font-size: 17px; }
+    a { color: var(--accent); }
+    .links { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0; }
+    .links a { text-decoration: none; border: 1px solid var(--line); background: var(--card); padding: 10px 16px; border-radius: 10px; font-weight: 600; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 24px 0; }
+    .stat { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+    .stat span { display: block; color: var(--muted); font-size: 14px; }
+    .stat strong { font-size: 28px; }
+    .stat s { color: var(--muted); font-size: 18px; margin-right: 6px; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--card); }
+    table { border-collapse: collapse; width: 100%; font-size: 15px; }
+    th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-weight: 600; }
+    tr:last-child td { border-bottom: 0; }
+    td.good { color: var(--good); font-weight: 700; }
+    figure { margin: 24px 0; }
+    figure img { width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); display: block; }
+    footer { margin-top: 56px; font-size: 14px; color: var(--muted); }
+  </style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">QA audit · fixes · new features</div>
+  <h1>Hardik Dental: from broken booking to tested, secure and faster</h1>
+  <p>A dental clinic site and admin panel generated with Lovable (React, TypeScript, Supabase), taken from an open-source
+    <a href="https://github.com/HardikQuantumCybernetic/hardik-dental">MIT-licensed repo</a>. Online booking failed for every visitor,
+    patient billing records were open to anyone, and live secrets were committed to the repo. I logged 21 bugs, fixed 20 and added two features.
+    Audit, fixes and features by Daniel Omoyibo, November 2026.</p>
+
+  <div class="links">
+    <a href="https://hardik-dental-before.vercel.app">Before (original)</a>
+    <a href="https://hardik-dental-after.vercel.app">After (fixed)</a>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><span>Playwright tests passing</span><s>11</s><strong>49 / 49</strong></div>
+    <div class="stat"><span>Accessibility violations (axe)</span><s>182</s><strong>0</strong></div>
+    <div class="stat"><span>Lighthouse mobile, home</span><s>38</s><strong>78</strong></div>
+    <div class="stat"><span>Main JavaScript file</span><s>2.4 MB</s><strong>345 kB</strong></div>
+  </div>
+
+  <figure><img src="/qa-report/01-cover.png" alt="Before: the booking form shows a database error. After: the booking is confirmed, with key numbers below." width="1600" height="1200"></figure>
+
+  <h2>Before and after, measured</h2>
+  <p>On the two live sites on 21 November 2026, same machine and settings. Lighthouse values are the median of 3 mobile runs.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Measure</th><th>Before</th><th>After</th></tr></thead>
+    <tbody>
+      <tr><td>Online booking</td><td>Fails for every visitor</td><td class="good">Works; double bookings blocked</td></tr>
+      <tr><td>Anonymous access to patient billing</td><td>Read, change, delete</td><td class="good">None</td></tr>
+      <tr><td>Playwright tests passing (same 49)</td><td>11</td><td class="good">49</td></tr>
+      <tr><td>Accessibility violations (11 routes × 2 widths)</td><td>182 elements</td><td class="good">0</td></tr>
+      <tr><td>Lighthouse performance, home / booking</td><td>38 / 52</td><td class="good">78 / 77</td></tr>
+      <tr><td>Lighthouse best practices, home</td><td>79</td><td class="good">100</td></tr>
+      <tr><td>Largest Contentful Paint, mobile home</td><td>6.3 s</td><td class="good">4.0 s</td></tr>
+      <tr><td>Total blocking time, mobile home</td><td>1,235 ms</td><td class="good">5 ms</td></tr>
+      <tr><td>Page weight, home</td><td>1,066 KiB</td><td class="good">258 KiB</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Booking</h2>
+  <figure><img src="/qa-report/02-booking.png" alt="Before: booking error toast. After: taken times greyed out in the time picker." width="1600" height="1200" loading="lazy"></figure>
+
+  <h2>Security</h2>
+  <figure><img src="/qa-report/03-security.png" alt="Anonymous requests that read, changed and deleted billing records before, and return nothing after." width="1600" height="1200" loading="lazy"></figure>
+
+  <h2>New: role-based access</h2>
+  <figure><img src="/qa-report/04-roles.png" alt="Admin Team and Roles tab, and the doctor's limited view." width="1600" height="1200" loading="lazy"></figure>
+
+  <h2>New: Stripe deposit</h2>
+  <figure><img src="/qa-report/05-stripe.png" alt="Stripe Checkout in test mode, the deposit confirmation and the Deposit paid badge in the admin list." width="1600" height="1200" loading="lazy"></figure>
+
+  <h2>The bug log</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Severity</th><th>Bug</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>B01</td><td>Critical</td><td>Live secrets committed (Clerk secret key, database password, Gemini key)</td><td>Fixed</td></tr>
+      <tr><td>B02</td><td>Critical</td><td>Anyone could read, change and delete patient billing and treatment plans</td><td>Fixed</td></tr>
+      <tr><td>B03</td><td>Critical</td><td>Every online booking failed with a raw database error</td><td>Fixed</td></tr>
+      <tr><td>B04</td><td>High</td><td>Contact form always failed</td><td>Fixed</td></tr>
+      <tr><td>B05</td><td>High</td><td>Taken slots offered again (double booking)</td><td>Fixed</td></tr>
+      <tr><td>B06</td><td>High</td><td>Patient portal couldn't load the patient's own data</td><td>Fixed</td></tr>
+      <tr><td>B07</td><td>High</td><td>Database couldn't be rebuilt from the migrations</td><td>Fixed</td></tr>
+      <tr><td>B08</td><td>Medium</td><td>Anyone could edit feedback records</td><td>Fixed</td></tr>
+      <tr><td>B09</td><td>Medium</td><td>One 2.4 MB JavaScript file, 3D scene included</td><td>Fixed</td></tr>
+      <tr><td>B10</td><td>Medium</td><td>55 icon buttons with no accessible name</td><td>Fixed</td></tr>
+      <tr><td>B11</td><td>Medium</td><td>127 text elements below WCAG contrast</td><td>Fixed</td></tr>
+      <tr><td>B12</td><td>Medium</td><td>"Book Appointment" off-screen on tablets and small laptops</td><td>Fixed</td></tr>
+      <tr><td>B13</td><td>Medium</td><td>Booking form listed doctors who don't exist</td><td>Fixed</td></tr>
+      <tr><td>B14</td><td>Low</td><td>Contact messages stored as 5-star reviews</td><td>Fixed</td></tr>
+      <tr><td>B15</td><td>Medium</td><td><code>npm run dev</code> showed a blank page</td><td>Fixed</td></tr>
+      <tr><td>B16</td><td>Low</td><td>Invented numbers and dead buttons in the admin dashboard</td><td>Fixed</td></tr>
+      <tr><td>B17</td><td>Low</td><td>Three clinic names; phone links dialled the wrong number</td><td>Fixed</td></tr>
+      <tr><td>B18</td><td>Low</td><td>Invented date of birth; email/SMS promises with no sending</td><td>Fixed</td></tr>
+      <tr><td>B19</td><td>Low</td><td>Patient data printed to the browser console</td><td>Fixed</td></tr>
+      <tr><td>B20</td><td>Low</td><td>Public AI chatbot endpoint without a shared rate limit</td><td>Documented (needs the clinic's Gemini key)</td></tr>
+      <tr><td>B21</td><td>Low</td><td>"Dr. Dr. Smith" in the portal, admin lists and WhatsApp text</td><td>Fixed</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>How it was tested</h2>
+  <ul>
+    <li>49 Playwright end-to-end tests, including direct calls to the database API as each role and as an anonymous visitor, plus a full Stripe test-mode payment.</li>
+    <li>axe-core accessibility scans on 11 routes at 1280 px and 375 px.</li>
+    <li>Lighthouse 12.8.2 (mobile, median of 3 runs) on both live sites.</li>
+    <li>The untouched app runs against its own copy of the original database, rebuilt from the repo's migrations.</li>
+  </ul>
+
+  <footer>Original project: github.com/HardikQuantumCybernetic/hardik-dental (MIT, © 2025 Hardik Dental). All patient data shown is fictional demo data.</footer>
+</main>
+</body>
+</html>

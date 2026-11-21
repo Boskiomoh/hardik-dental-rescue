@@ -45,6 +45,7 @@ Secret values are redacted everywhere in this report and its screenshots.
 | B18 | Low | Booking | The form promises email and SMS confirmations that don't exist; date of birth is saved as 1990-01-01 | Fixed `62a099a`, `0602e93` |
 | B19 | Low | Privacy | Patient and feedback data is printed to the browser console | Fixed `bce02b0`, `0bb764e` |
 | B20 | Low | Security | The public AI chatbot endpoint has no real rate limit (per-instance memory only) | Not fixed: needs a shared rate-limit store and the clinic's Gemini key (chatbot not deployed in this demo) |
+| B21 | Low | Content | Doctors appear as "Dr. Dr. Smith" in the patient portal, admin lists and WhatsApp messages | Fixed `f075ff5` (portal), `5cc5e7f` (admin) |
 
 ## Details
 
@@ -247,6 +248,14 @@ New patients are saved with `date_of_birth = 1990-01-01`, and the visitor's note
 clinic's Gemini quota.
 
 **Expected:** a shared rate limit (database or KV) and a per-day cap.
+
+### B21 · Low · "Dr. Dr. Smith"
+
+Found while fixing B06. Doctor names in the database already start with "Dr.", but the patient portal, the admin
+Appointments and Patient lists, and the WhatsApp reminder text all add another "Dr." in front. The admin lists
+and WhatsApp text also show raw times such as `09:00:00`.
+
+**Expected:** "Dr. Smith", "9:00".
 
 ## Also noted (not counted as bugs)
 

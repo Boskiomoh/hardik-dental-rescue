@@ -1,3 +1,7 @@
+> **About this fork:** a QA audit, bug fixes and two new features (role-based staff access and a Stripe deposit)
+> by Daniel Omoyibo. See [REPORT.md](REPORT.md) for the before/after results and [BUGS.md](BUGS.md) for the bug log.
+> The original README follows unchanged.
+
 # 🦷 Hardik Dental - Dental Clinic Management System
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
