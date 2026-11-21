@@ -3,7 +3,7 @@ import { chromium } from "@playwright/test";
 const base = process.argv[2] ?? "http://localhost:8080";
 const out = process.argv[3] ?? "audit/results/before";
 const browser = await chromium.launch();
-for (const width of [800, 1024]) {
+for (const width of [800, 1024, 1280]) {
   const page = await browser.newPage({ viewport: { width, height: 700 } });
   await page.goto(base + "/", { waitUntil: "networkidle" });
   const cta = page.locator("nav a, nav button").filter({ hasText: "Book Appointment" }).first();
