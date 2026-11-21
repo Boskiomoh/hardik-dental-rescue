@@ -10,6 +10,7 @@ Daniel Omoyibo, November 2026.
 | Before (original code, untouched database rules) | https://hardik-dental-before.vercel.app |
 | After (fixed and extended) | https://hardik-dental-after.vercel.app |
 | Full bug log with steps to reproduce | [BUGS.md](BUGS.md) |
+| Source code | https://github.com/Boskiomoh/hardik-dental-rescue |
 
 Both sites use fictional demo data. The "before" site is left broken on purpose.
 
