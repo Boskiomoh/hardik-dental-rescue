@@ -13,3 +13,8 @@ extra_search_path = ["public", "extensions"]
 # Stripe calls this directly; it checks Stripe's signature instead of a JWT.
 [functions.stripe-webhook]
 verify_jwt = false
+
+# Sign-in, sign-up and password-reset links go to the deployed fixed app.
+[auth]
+site_url = "https://hardik-dental-after.vercel.app"
+additional_redirect_urls = ["https://hardik-dental-after.vercel.app/**", "http://localhost:8081/**"]

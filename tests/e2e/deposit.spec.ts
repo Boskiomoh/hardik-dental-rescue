@@ -21,7 +21,7 @@ test("a patient pays the $25 deposit with Stripe's test card", async ({ page }) 
   expect(page.url()).toMatch(/\/cs_test_/);
 
   const form = page.frameLocator('iframe[src*="elements-inner-habanero"]').first();
-  await form.getByText("Card", { exact: true }).first().click({ timeout: 30_000 });
+  await form.getByText("Card", { exact: true }).first().click({ timeout: 60_000 });
   await form.locator("#payment-numberInput").fill("4242424242424242");
   await form.locator("#payment-expiryInput").fill("12 / 34");
   await form.locator("#payment-cvcInput").fill("123");

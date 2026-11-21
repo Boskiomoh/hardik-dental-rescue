@@ -1,0 +1,42 @@
+{
+  "baseUrl": "https://hardik-dental-before.vercel.app",
+  "measuredAt": "2026-11-21T13:18:26.757Z",
+  "home": {
+    "median": {
+      "file": "audit/results/live-before/lighthouse/mobile-home-run2.json",
+      "performance": 38,
+      "accessibility": 92,
+      "bestPractices": 79,
+      "seo": 82,
+      "fcpMs": 6030,
+      "lcpMs": 6302,
+      "tbtMs": 1235,
+      "cls": 0,
+      "bytesKiB": 1066
+    },
+    "allPerformance": [
+      37,
+      38,
+      39
+    ]
+  },
+  "booking": {
+    "median": {
+      "file": "audit/results/live-before/lighthouse/mobile-booking-run1.json",
+      "performance": 52,
+      "accessibility": 90,
+      "bestPractices": 79,
+      "seo": 82,
+      "fcpMs": 5898,
+      "lcpMs": 7474,
+      "tbtMs": 395,
+      "cls": 0.001,
+      "bytesKiB": 804
+    },
+    "allPerformance": [
+      40,
+      52,
+      54
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+# Never upload local env files (test logins, local keys); Vercel env vars are used instead
+.env
+.env.*
+!.env.example
+# Not needed to build the site
+/audit
+/tests
+/supabase
+/dist
+/dist-before
+/playwright-report
+/test-results

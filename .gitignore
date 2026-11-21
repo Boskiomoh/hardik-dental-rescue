@@ -35,3 +35,8 @@ supabase/.temp
 # Playwright output
 playwright-report
 test-results
+
+.vercel
+.env*
+
+!.env.example

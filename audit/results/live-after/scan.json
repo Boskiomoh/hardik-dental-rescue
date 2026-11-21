@@ -1,0 +1,261 @@
+{
+  "summary": {
+    "label": "live-after",
+    "baseUrl": "https://hardik-dental-after.vercel.app",
+    "scannedAt": "2026-11-21T13:14:51.428Z",
+    "pages": 22,
+    "axeViolationTypes": 0,
+    "axeViolationNodes": 0,
+    "consoleErrors": 2,
+    "pageErrors": 0,
+    "pagesWithOverflow": 0
+  },
+  "results": [
+    {
+      "viewport": "desktop",
+      "route": "/",
+      "loadMs": 2086,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "axe": []
+    },
+    {
+      "viewport": "desktop",
+      "route": "/services",
+      "loadMs": 1809,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "axe": []
+    },
+    {
+      "viewport": "desktop",
+      "route": "/about",
+      "loadMs": 1819,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "axe": []
+    },
+    {
+      "viewport": "desktop",
+      "route": "/booking",
+      "loadMs": 2323,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "axe": []
+    },
+    {
+      "viewport": "desktop",
+      "route": "/contact",
+      "loadMs": 1763,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "axe": []
+    },
+    {
+      "viewport": "desktop",
+      "route": "/feedback",
+      "loadMs": 1746,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "axe": []
+    },
+    {
+      "viewport": "desktop",
+      "route": "/login",
+      "loadMs": 1667,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "axe": []
+    },
+    {
+      "viewport": "desktop",
+      "route": "/signup",
+      "loadMs": 1821,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "axe": []
+    },
+    {
+      "viewport": "desktop",
+      "route": "/admin",
+      "loadMs": 1787,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "axe": []
+    },
+    {
+      "viewport": "desktop",
+      "route": "/patient-dashboard",
+      "loadMs": 1710,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "axe": []
+    },
+    {
+      "viewport": "desktop",
+      "route": "/this-page-does-not-exist",
+      "loadMs": 1842,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [
+        "404 Error: User attempted to access non-existent route: /this-page-does-not-exist"
+      ],
+      "pageErrors": [],
+      "failedRequests": [],
+      "axe": []
+    },
+    {
+      "viewport": "phone",
+      "route": "/",
+      "loadMs": 1625,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "axe": []
+    },
+    {
+      "viewport": "phone",
+      "route": "/services",
+      "loadMs": 1779,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "axe": []
+    },
+    {
+      "viewport": "phone",
+      "route": "/about",
+      "loadMs": 1755,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "axe": []
+    },
+    {
+      "viewport": "phone",
+      "route": "/booking",
+      "loadMs": 2908,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "axe": []
+    },
+    {
+      "viewport": "phone",
+      "route": "/contact",
+      "loadMs": 1842,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "axe": []
+    },
+    {
+      "viewport": "phone",
+      "route": "/feedback",
+      "loadMs": 1850,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "axe": []
+    },
+    {
+      "viewport": "phone",
+      "route": "/login",
+      "loadMs": 1766,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "axe": []
+    },
+    {
+      "viewport": "phone",
+      "route": "/signup",
+      "loadMs": 1824,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "axe": []
+    },
+    {
+      "viewport": "phone",
+      "route": "/admin",
+      "loadMs": 1876,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "axe": []
+    },
+    {
+      "viewport": "phone",
+      "route": "/patient-dashboard",
+      "loadMs": 1961,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "axe": []
+    },
+    {
+      "viewport": "phone",
+      "route": "/this-page-does-not-exist",
+      "loadMs": 1718,
+      "loadError": null,
+      "overflowPx": 0,
+      "consoleErrors": [
+        "404 Error: User attempted to access non-existent route: /this-page-does-not-exist"
+      ],
+      "pageErrors": [],
+      "failedRequests": [],
+      "axe": []
+    }
+  ]
+}
