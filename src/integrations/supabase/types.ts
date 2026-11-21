@@ -19,34 +19,46 @@ export type Database = {
           appointment_date: string
           appointment_time: string
           created_at: string
+          deposit_amount_cents: number | null
+          deposit_paid_at: string | null
+          deposit_status: string
           doctor: string
           id: string
           notes: string | null
           patient_id: string | null
           service_type: string
           status: string | null
+          stripe_checkout_session_id: string | null
         }
         Insert: {
           appointment_date: string
           appointment_time: string
           created_at?: string
+          deposit_amount_cents?: number | null
+          deposit_paid_at?: string | null
+          deposit_status?: string
           doctor: string
           id?: string
           notes?: string | null
           patient_id?: string | null
           service_type: string
           status?: string | null
+          stripe_checkout_session_id?: string | null
         }
         Update: {
           appointment_date?: string
           appointment_time?: string
           created_at?: string
+          deposit_amount_cents?: number | null
+          deposit_paid_at?: string | null
+          deposit_status?: string
           doctor?: string
           id?: string
           notes?: string | null
           patient_id?: string | null
           service_type?: string
           status?: string | null
+          stripe_checkout_session_id?: string | null
         }
         Relationships: [
           {

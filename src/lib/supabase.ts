@@ -88,6 +88,9 @@ export type Appointment = {
   doctor: string
   status: 'scheduled' | 'confirmed' | 'completed' | 'cancelled' | 'no-show'
   notes: string
+  // Stripe booking deposit (see supabase/functions/*-deposit*)
+  deposit_status?: 'not_required' | 'pending' | 'paid'
+  deposit_amount_cents?: number | null
 }
 
 export type Treatment = {

@@ -178,10 +178,18 @@ Thank you for choosing Hardik Dental!`;
                       <p className="text-dental-gray">{appointment.service_type}</p>
                     </div>
 
-                    <Badge className={`${getStatusColor(appointment.status)} flex items-center space-x-1 w-fit`}>
-                      {getStatusIcon(appointment.status)}
-                      <span className="capitalize">{appointment.status}</span>
-                    </Badge>
+                    <div className="flex flex-wrap gap-2">
+                      <Badge className={`${getStatusColor(appointment.status)} flex items-center space-x-1 w-fit`}>
+                        {getStatusIcon(appointment.status)}
+                        <span className="capitalize">{appointment.status}</span>
+                      </Badge>
+                      {appointment.deposit_status === 'paid' && (
+                        <Badge className="bg-green-100 text-green-800 w-fit">Deposit paid</Badge>
+                      )}
+                      {appointment.deposit_status === 'pending' && (
+                        <Badge variant="outline" className="w-fit">Deposit not paid</Badge>
+                      )}
+                    </div>
                   </div>
                   
                   {/* Appointment details */}

@@ -5,7 +5,8 @@ import { ValidatedInput } from "@/components/ui/validated-input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar, Clock, User, Phone, Mail, MessageSquare, CheckCircle } from "lucide-react";
+import { Calendar, Clock, User, Phone, Mail, MessageSquare, CheckCircle, CreditCard } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import QuickInfoCard from "@/components/common/QuickInfoCard";
@@ -30,6 +31,12 @@ const emptyForm = {
 
 const DentalBooking = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [appointmentId, setAppointmentId] = useState<string | null>(null);
+  const [isStartingPayment, setIsStartingPayment] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const depositParam = searchParams.get('deposit');
+  const sessionId = searchParams.get('session_id');
+  const [depositResult, setDepositResult] = useState<'checking' | 'paid' | 'unpaid' | 'error' | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [doctors, setDoctors] = useState<string[]>([]);
   const [services, setServices] = useState<string[]>([]);
@@ -126,7 +133,7 @@ const DentalBooking = () => {
     setIsSubmitting(true);
     // book_appointment saves the patient and the appointment in one step,
     // without giving visitors read access to patient records
-    const { error } = await supabase.rpc('book_appointment', {
+    const { data: newAppointmentId, error } = await supabase.rpc('book_appointment', {
       p_first_name: formData.firstName.value,
       p_last_name: formData.lastName.value,
       p_email: formData.email.value,
@@ -157,7 +164,10 @@ const DentalBooking = () => {
       return;
     }
 
+    setAppointmentId(newAppointmentId);
     setIsSubmitted(true);
+    // The confirmation replaces the long form; bring its heading into view
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     toast({
       title: "Appointment Request Submitted!",
       description: "We'll contact you within 24 hours to confirm your appointment.",
@@ -181,6 +191,64 @@ const DentalBooking = () => {
     { text: "Times already taken with your chosen doctor are greyed out", icon: "users" as const },
     { text: "Our team will call or email you to confirm", icon: "check" as const }
   ];
+
+  // Back from Stripe Checkout: the server asks Stripe whether it was paid
+  useEffect(() => {
+    if (depositParam !== 'success' || !sessionId) return;
+    setDepositResult('checking');
+    supabase.functions
+      .invoke('confirm-deposit', { body: { session_id: sessionId } })
+      .then(({ data, error }) => {
+        if (error) setDepositResult('error');
+        else setDepositResult(data?.status === 'paid' ? 'paid' : 'unpaid');
+      });
+  }, [depositParam, sessionId]);
+
+  const startDepositPayment = async () => {
+    if (!appointmentId) return;
+    setIsStartingPayment(true);
+    const { data, error } = await supabase.functions.invoke('create-deposit-checkout', {
+      body: { appointment_id: appointmentId },
+    });
+    if (error || !data?.url) {
+      setIsStartingPayment(false);
+      toast({
+        title: "Couldn't open the payment page",
+        description: "Your booking is saved. You can pay the deposit at the clinic instead.",
+        variant: "destructive"
+      });
+      return;
+    }
+    window.location.assign(data.url);
+  };
+
+  if (depositParam === 'success' || depositParam === 'cancelled') {
+    const resultText = {
+      checking: { title: "Checking your payment...", body: "This only takes a moment." },
+      paid: { title: "Deposit received", body: `Thank you. Your $25 deposit is paid and your slot is secured. It comes off your bill at ${clinic.name}.` },
+      unpaid: { title: "Payment not completed", body: "Stripe hasn't confirmed this payment. Your booking request still stands; you can pay the deposit at the clinic." },
+      error: { title: "Couldn't check your payment", body: `Your booking is saved. If you were charged, the payment will show on your bill. Questions? Call ${clinic.phone}.` },
+    };
+    const shown = depositParam === 'cancelled'
+      ? { title: "Payment cancelled", body: "No money was taken. Your booking request still stands; you can pay the deposit at the clinic." }
+      : resultText[depositResult ?? 'checking'];
+    return (
+      <section className="py-20 bg-gradient-to-br from-dental-blue-light via-white to-dental-mint-light">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Card className="shadow-dental-card border-dental-blue-light">
+            <CardContent className="text-center p-10" role="status" aria-live="polite">
+              <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 ${depositResult === 'paid' ? 'bg-success' : 'bg-dental-blue'}`}>
+                {depositResult === 'paid' ? <CheckCircle className="w-8 h-8 text-white" /> : <CreditCard className="w-8 h-8 text-white" />}
+              </div>
+              <h3 className="text-2xl font-bold text-foreground mb-3 font-inter">{shown.title}</h3>
+              <p className="text-dental-gray mb-8">{shown.body}</p>
+              <Button variant="dental" onClick={() => setSearchParams({})}>Back to booking</Button>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+    );
+  }
 
   if (isSubmitted) {
     return (
@@ -214,14 +282,29 @@ const DentalBooking = () => {
                   </ul>
                 </div>
               </div>
+              {appointmentId && (
+                <div className="mt-8 rounded-xl border border-dental-blue-light p-6 text-left sm:flex sm:items-center sm:justify-between sm:gap-6">
+                  <div>
+                    <h4 className="font-semibold text-foreground flex items-center gap-2">
+                      <CreditCard className="w-5 h-5 text-dental-blue" />
+                      Secure your slot with a $25 deposit
+                    </h4>
+                    <p className="text-sm text-dental-gray mt-1">Optional. Paid securely through Stripe and taken off your bill. You can also pay at the clinic.</p>
+                  </div>
+                  <Button variant="dental" className="mt-4 sm:mt-0 shrink-0" onClick={startDepositPayment} disabled={isStartingPayment}>
+                    {isStartingPayment ? "Opening Stripe..." : "Pay $25 deposit"}
+                  </Button>
+                </div>
+              )}
               <Button 
-                variant="dental" 
+                variant="outline" 
                 size="lg" 
                 className="mt-8 font-inter"
                 onClick={() => {
                   // The inputs remount empty, so the saved values must be cleared too
                   setFormData(emptyForm);
                   setBookedSlots([]);
+                  setAppointmentId(null);
                   setIsSubmitted(false);
                 }}
               >
@@ -383,9 +466,9 @@ const DentalBooking = () => {
                   <Label htmlFor="service" className="text-dental-blue font-medium">
                     Service Needed
                   </Label>
-                  <Select required onValueChange={(value) => updateFormValue('service', value)}>
+                  <Select required disabled={services.length === 0} onValueChange={(value) => updateFormValue('service', value)}>
                     <SelectTrigger id="service" className="border-dental-blue-light focus:border-dental-blue">
-                      <SelectValue placeholder="Select service" />
+                      <SelectValue placeholder={services.length === 0 ? "Loading..." : "Select service"} />
                     </SelectTrigger>
                     <SelectContent>
                       {services.map((service) => (
@@ -405,8 +488,8 @@ const DentalBooking = () => {
                     // Reset time when doctor changes as slots may differ
                     updateFormValue('time', '');
                   }}>
-                    <SelectTrigger id="doctor" className="border-dental-blue-light focus:border-dental-blue">
-                      <SelectValue placeholder="Select doctor" />
+                    <SelectTrigger id="doctor" className="border-dental-blue-light focus:border-dental-blue" disabled={doctors.length === 0}>
+                      <SelectValue placeholder={doctors.length === 0 ? "Loading..." : "Select doctor"} />
                     </SelectTrigger>
                     <SelectContent>
                       {doctors.map((doctor) => (

@@ -1,0 +1,31 @@
+// Books a slot on the fixed app, then clicks "Pay $25 deposit" and reports
+// where it lands (Stripe Checkout, or the error toast if Stripe isn't set up).
+import { chromium } from "@playwright/test";
+const base = process.argv[2] ?? "http://localhost:8081";
+const out = process.argv[3] ?? "audit/results/after/deposit";
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+await page.goto(base + "/booking", { waitUntil: "networkidle" });
+const day = new Date(Date.now() + 3 * 86400000);
+if (day.getDay() === 0) day.setDate(day.getDate() + 1);
+await page.fill("#firstName", "Demo");
+await page.fill("#lastName", "Depositor");
+await page.fill("#email", "demo.depositor@example.com");
+await page.fill("#phone", "5550109876");
+await page.fill("#date", day.toISOString().slice(0, 10));
+await page.locator("#doctor").click();
+await page.getByRole("option", { name: "Dr. Johnson" }).click();
+await page.locator("#time").click();
+await page.getByRole("option", { name: /^\d+:\d+ (AM|PM)$/ }).first().click();
+await page.locator("#service").click();
+await page.getByRole("option", { name: "Regular Cleaning" }).click();
+await page.locator("form button[type=submit]").click();
+await page.getByRole("button", { name: "Pay $25 deposit" }).waitFor({ timeout: 15000 });
+await page.screenshot({ path: `${out}-offer.png` });
+await page.getByRole("button", { name: "Pay $25 deposit" }).click();
+await page.waitForTimeout(6000);
+console.log("url after click:", page.url());
+const toasts = await page.locator("[role=status], ol li").allInnerTexts();
+console.log("toasts:", JSON.stringify(toasts.filter(Boolean).slice(0, 2)));
+await page.screenshot({ path: `${out}-after-click.png` });
+await browser.close();
