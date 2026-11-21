@@ -111,7 +111,7 @@ patient    → own record only</pre>
       <div class="panel"><h2>Stripe Checkout (test mode)</h2><img class="shot" style="height:560px" src="${img(`${R}/after/deposit-stripe.png`)}"></div>
       <div class="panel"><h2>Confirmed by the server</h2><img class="shot" style="height:270px" src="${img(`${R}/after/deposit-paid.png`)}"><img class="shot" style="height:270px" src="${img(`${R}/live/after-admin-appointments.png`)}"></div>
     </div>
-    <div class="caption">Supabase Edge Functions create the Checkout session and ask Stripe whether it was paid, so the browser can never mark itself paid. A webhook function is included for patients who close the tab early. Tested end to end with Stripe's 4242 test card.</div>`,
+    <div class="caption">Supabase Edge Functions create the Checkout session and ask Stripe whether it was paid, so the browser can never mark itself paid. A Stripe webhook also marks it paid if the patient closes the tab early. Both paths tested with Stripe's 4242 test card.</div>`,
 };
 
 const browser = await chromium.launch();

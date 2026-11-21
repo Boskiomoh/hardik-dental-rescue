@@ -73,8 +73,9 @@ Front desk sees patients, appointments, billing and contact messages. Doctors se
 with no billing and no deleting. The database enforces the same rules: hiding a button is never the only protection.
 
 **Stripe deposit.** After booking, a patient can pay a $25 deposit in Stripe Checkout. Supabase Edge Functions
-create the session and ask Stripe whether it was paid, so the browser can never mark itself paid. A webhook
-function is included for patients who close the tab early (it needs registering in the clinic's Stripe account).
+create the session and ask Stripe whether it was paid, so the browser can never mark itself paid. A Stripe webhook
+also marks the deposit paid if the patient closes the tab before returning. Tested by blocking the site's own
+confirmation call (`audit/probes/deposit-webhook.mjs`).
 
 ## Tests
 
