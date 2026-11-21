@@ -1,49 +1,43 @@
-import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { LoadingSkeleton } from "@/components/ui/loading-skeleton";
 import { 
   Users, 
   Calendar, 
-  IndianRupee, 
   Activity,
   UserCheck,
   CalendarCheck,
-  CreditCard,
   FileBarChart,
-  TrendingUp,
   Clock,
   CheckCircle,
-  AlertCircle,
   Plus,
   Eye
 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
 import { usePatients, useAppointments } from "@/hooks/useSupabase";
 
-const AdminDashboard = () => {
-  const { toast } = useToast();
+interface AdminDashboardProps {
+  // Opens another admin tab (used by the quick actions)
+  onNavigate?: (tab: string) => void;
+}
+
+const localToday = () => {
+  const now = new Date();
+  return new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+};
+
+const AdminDashboard = ({ onNavigate }: AdminDashboardProps) => {
   const { patients, loading: patientsLoading } = usePatients();
   const { appointments, loading: appointmentsLoading } = useAppointments();
-  const [revenue, setRevenue] = useState(45678);
-  const [activeUsers, setActiveUsers] = useState(12);
 
+  const today = localToday();
   const totalPatients = patients.length;
   const activePatients = patients.filter(p => p.status === 'active').length;
   const totalAppointments = appointments.length;
-  const pendingAppointments = appointments.filter(a => a.status === 'scheduled').length;
-  const todaysAppointments = appointments.filter(a => {
-    const today = new Date().toISOString().split('T')[0];
-    return a.appointment_date === today;
-  }).length;
-
-  const handleQuickAction = (action: string) => {
-    toast({
-      title: "Quick Action",
-      description: `${action} feature is ready to use!`,
-    });
-  };
+  const todaysAppointments = appointments.filter(a => a.appointment_date === today).length;
+  const upcomingAppointments = appointments
+    .filter(a => a.status === 'scheduled' && a.appointment_date >= today)
+    .sort((a, b) => `${a.appointment_date} ${a.appointment_time}`.localeCompare(`${b.appointment_date} ${b.appointment_time}`))
+    .slice(0, 5);
 
   if (patientsLoading || appointmentsLoading) {
     return (
@@ -79,10 +73,6 @@ const AdminDashboard = () => {
               <div className="space-y-1">
                 <p className="text-sm font-medium text-dental-gray">Total Patients</p>
                 <p className="text-3xl font-bold text-dental-blue">{totalPatients}</p>
-                <div className="flex items-center space-x-1 text-sm">
-                  <TrendingUp className="w-4 h-4 text-green-500" />
-                  <span className="text-green-600">+12% from last month</span>
-                </div>
               </div>
               <div className="p-3 bg-dental-blue/10 rounded-full">
                 <Users className="w-8 h-8 text-dental-blue" />
@@ -98,10 +88,6 @@ const AdminDashboard = () => {
               <div className="space-y-1">
                 <p className="text-sm font-medium text-dental-gray">Today's Appointments</p>
                 <p className="text-3xl font-bold text-dental-mint">{todaysAppointments}</p>
-                <div className="flex items-center space-x-1 text-sm">
-                  <TrendingUp className="w-4 h-4 text-green-500" />
-                  <span className="text-green-600">+5% from last month</span>
-                </div>
               </div>
               <div className="p-3 bg-dental-mint/10 rounded-full">
                 <Calendar className="w-8 h-8 text-dental-mint" />
@@ -117,10 +103,6 @@ const AdminDashboard = () => {
               <div className="space-y-1">
                 <p className="text-sm font-medium text-dental-gray">Active Patients</p>
                 <p className="text-3xl font-bold text-green-600">{activePatients}</p>
-                <div className="flex items-center space-x-1 text-sm">
-                  <TrendingUp className="w-4 h-4 text-green-500" />
-                  <span className="text-green-600">+8% from last month</span>
-                </div>
               </div>
               <div className="p-3 bg-green-100 rounded-full">
                 <UserCheck className="w-8 h-8 text-green-600" />
@@ -136,10 +118,6 @@ const AdminDashboard = () => {
               <div className="space-y-1">
                 <p className="text-sm font-medium text-dental-gray">Total Appointments</p>
                 <p className="text-3xl font-bold text-blue-600">{totalAppointments}</p>
-                <div className="flex items-center space-x-1 text-sm">
-                  <TrendingUp className="w-4 h-4 text-green-500" />
-                  <span className="text-green-600">+15% from last month</span>
-                </div>
               </div>
               <div className="p-3 bg-blue-100 rounded-full">
                 <CalendarCheck className="w-8 h-8 text-blue-600" />
@@ -165,7 +143,7 @@ const AdminDashboard = () => {
             <Button 
               variant="outline" 
               className="h-24 flex flex-col space-y-3 hover:bg-dental-blue hover:text-white transition-all duration-200 border-dental-blue/20"
-              onClick={() => handleQuickAction("Add New Patient")}
+              onClick={() => onNavigate?.("patients")}
             >
               <Plus className="w-6 h-6" />
               <span className="text-sm font-medium">Add New Patient</span>
@@ -174,7 +152,7 @@ const AdminDashboard = () => {
             <Button 
               variant="outline" 
               className="h-24 flex flex-col space-y-3 hover:bg-dental-mint hover:text-white transition-all duration-200 border-dental-mint/20"
-              onClick={() => handleQuickAction("Schedule Appointment")}
+              onClick={() => onNavigate?.("appointments")}
             >
               <CalendarCheck className="w-6 h-6" />
               <span className="text-sm font-medium">Schedule Appointment</span>
@@ -183,7 +161,7 @@ const AdminDashboard = () => {
             <Button 
               variant="outline" 
               className="h-24 flex flex-col space-y-3 hover:bg-green-500 hover:text-white transition-all duration-200 border-green-200"
-              onClick={() => handleQuickAction("Generate Report")}
+              onClick={() => onNavigate?.("reports")}
             >
               <FileBarChart className="w-6 h-6" />
               <span className="text-sm font-medium">Generate Report</span>
@@ -192,7 +170,7 @@ const AdminDashboard = () => {
             <Button 
               variant="outline" 
               className="h-24 flex flex-col space-y-3 hover:bg-blue-500 hover:text-white transition-all duration-200 border-blue-200"
-              onClick={() => handleQuickAction("View Analytics")}
+              onClick={() => onNavigate?.("reports")}
             >
               <Eye className="w-6 h-6" />
               <span className="text-sm font-medium">View Analytics</span>
@@ -201,47 +179,31 @@ const AdminDashboard = () => {
         </CardContent>
       </Card>
 
-      {/* Recent Notifications */}
+      {/* Upcoming appointments (real data; replaces a list of invented notifications) */}
       <Card className="border-dental-blue/20">
         <CardHeader>
           <CardTitle className="text-xl text-dental-blue flex items-center space-x-2">
-            <AlertCircle className="w-5 h-5" />
-            <span>Recent Notifications</span>
+            <Clock className="w-5 h-5" />
+            <span>Next Appointments</span>
           </CardTitle>
-          <CardDescription>Latest updates and alerts</CardDescription>
+          <CardDescription>The next five scheduled visits</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex items-center space-x-3 p-3 bg-green-50 rounded-lg border-l-4 border-green-500">
-            <CalendarCheck className="w-5 h-5 text-green-600" />
-            <div className="flex-1">
-              <p className="font-medium text-green-800">{pendingAppointments} appointments scheduled for today</p>
-              <p className="text-sm text-green-600">2 hours ago</p>
-            </div>
-          </div>
-          
-          <div className="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg border-l-4 border-blue-500">
-            <IndianRupee className="w-5 h-5 text-blue-600" />
-            <div className="flex-1">
-              <p className="font-medium text-blue-800">Payment received from John Smith</p>
-              <p className="text-sm text-blue-600">4 hours ago</p>
-            </div>
-          </div>
-          
-          <div className="flex items-center space-x-3 p-3 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
-            <Clock className="w-5 h-5 text-yellow-600" />
-            <div className="flex-1">
-              <p className="font-medium text-yellow-800">Appointment reminder sent to 12 patients</p>
-              <p className="text-sm text-yellow-600">6 hours ago</p>
-            </div>
-          </div>
-          
-          <div className="flex items-center space-x-3 p-3 bg-purple-50 rounded-lg border-l-4 border-purple-500">
-            <FileBarChart className="w-5 h-5 text-purple-600" />
-            <div className="flex-1">
-              <p className="font-medium text-purple-800">Monthly report is ready</p>
-              <p className="text-sm text-purple-600">1 day ago</p>
-            </div>
-          </div>
+        <CardContent className="space-y-3">
+          {upcomingAppointments.length === 0 ? (
+            <p className="text-dental-gray">No upcoming appointments.</p>
+          ) : (
+            upcomingAppointments.map(appointment => (
+              <div key={appointment.id} className="flex items-center space-x-3 p-3 bg-dental-blue-light/40 rounded-lg border-l-4 border-dental-blue">
+                <CalendarCheck className="w-5 h-5 text-dental-blue" />
+                <div className="flex-1">
+                  <p className="font-medium text-foreground">{appointment.service_type} with {appointment.doctor}</p>
+                  <p className="text-sm text-dental-gray">
+                    {new Date(`${appointment.appointment_date}T${appointment.appointment_time}`).toLocaleString([], { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })}
+                  </p>
+                </div>
+              </div>
+            ))
+          )}
         </CardContent>
       </Card>
     </div>

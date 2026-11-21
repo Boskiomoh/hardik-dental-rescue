@@ -19,14 +19,18 @@ import AppointmentManagement from "./admin/AppointmentManagement";
 import ReportsAnalytics from "./admin/ReportsAnalytics";
 import FeedbackManagement from "./admin/FeedbackManagement";
 import MessagesManagement from "./admin/MessagesManagement";
+import type { User as AuthUser } from "@supabase/supabase-js";
 
 interface AdminPanelProps {
+  user: AuthUser;
   onLogout?: () => void;
 }
 
-const AdminPanel = ({ onLogout }: AdminPanelProps) => {
-  const [activeTab, setActiveTab] = useState("feedback");
-  const [userRole] = useState("Admin"); // This would come from authentication
+const AdminPanel = ({ user, onLogout }: AdminPanelProps) => {
+  const [activeTab, setActiveTab] = useState("dashboard");
+  const lastSignIn = user.last_sign_in_at
+    ? new Date(user.last_sign_in_at).toLocaleString([], { dateStyle: "medium", timeStyle: "short" })
+    : null;
 
   const navigationItems = [
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -40,7 +44,7 @@ const AdminPanel = ({ onLogout }: AdminPanelProps) => {
   const renderActiveComponent = () => {
     switch (activeTab) {
       case "dashboard":
-        return <AdminDashboard />;
+        return <AdminDashboard onNavigate={setActiveTab} />;
       case "patients":
         return <PatientManagementSupabase />;
       case "appointments":
@@ -52,7 +56,7 @@ const AdminPanel = ({ onLogout }: AdminPanelProps) => {
       case "reports":
         return <ReportsAnalytics />;
       default:
-        return <AdminDashboard />;
+        return <AdminDashboard onNavigate={setActiveTab} />;
     }
   };
 
@@ -86,8 +90,8 @@ const AdminPanel = ({ onLogout }: AdminPanelProps) => {
                   <User className="w-4 h-4 md:w-5 md:h-5 text-dental-blue" />
                 </div>
                 <div>
-                  <p className="font-semibold text-foreground text-sm md:text-base">Welcome back, Dr. Admin</p>
-                  <p className="text-dental-gray text-xs md:text-sm">Role: {userRole} • Last login: Today, 9:30 AM</p>
+                  <p className="font-semibold text-foreground text-sm md:text-base break-all">Signed in as {user.email}</p>
+                  <p className="text-dental-gray text-xs md:text-sm">Role: Admin{lastSignIn && ` • Last sign-in: ${lastSignIn}`}</p>
                 </div>
               </div>
               <Button variant="dental-outline" size="sm" onClick={handleLogout} className="text-xs md:text-sm">

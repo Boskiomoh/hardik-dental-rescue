@@ -50,7 +50,7 @@ const Admin = () => {
     <div className="min-h-screen bg-background font-inter">
       <DentalNavbar />
       <div className="pt-16">
-        <AdminPanel onLogout={handleLogout} />
+        <AdminPanel user={user} onLogout={handleLogout} />
       </div>
       <DentalFooter />
     </div>
