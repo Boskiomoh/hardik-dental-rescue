@@ -181,8 +181,8 @@ const PatientManagementSupabase = () => {
       appointmentInfo += `
 📅 *Upcoming Appointment*
 🗓️ *Date:* ${formattedDate}
-⏰ *Time:* ${upcomingAppointment.appointment_time}
-👨‍⚕️ *Doctor:* Dr. ${upcomingAppointment.doctor}
+⏰ *Time:* ${upcomingAppointment.appointment_time.slice(0, 5)}
+👨‍⚕️ *Doctor:* ${upcomingAppointment.doctor}
 🦷 *Service:* ${upcomingAppointment.service_type}
 📋 *Status:* ${upcomingAppointment.status}
 ${upcomingAppointment.notes ? `📝 *Notes:* ${upcomingAppointment.notes}` : ''}`;
@@ -199,8 +199,8 @@ ${upcomingAppointment.notes ? `📝 *Notes:* ${upcomingAppointment.notes}` : ''}
 
 📜 *Last Appointment*
 🗓️ *Date:* ${formattedDate}
-⏰ *Time:* ${lastAppointment.appointment_time}
-👨‍⚕️ *Doctor:* Dr. ${lastAppointment.doctor}
+⏰ *Time:* ${lastAppointment.appointment_time.slice(0, 5)}
+👨‍⚕️ *Doctor:* ${lastAppointment.doctor}
 🦷 *Service:* ${lastAppointment.service_type}
 📋 *Status:* ${lastAppointment.status}
 ${lastAppointment.notes ? `📝 *Notes:* ${lastAppointment.notes}` : ''}`;
@@ -483,13 +483,13 @@ ${appointmentInfo}
                               <div className="flex items-center space-x-2">
                                 <Clock className="w-3.5 h-3.5 text-dental-gray" />
                                 <span className="text-foreground font-medium">
-                                  {appointmentsByPatient[patient.id].upcoming[0].appointment_time}
+                                  {appointmentsByPatient[patient.id].upcoming[0].appointment_time.slice(0, 5)}
                                 </span>
                               </div>
                               <div className="flex items-center space-x-2">
                                 <Stethoscope className="w-3.5 h-3.5 text-dental-gray" />
                                 <span className="text-foreground font-medium">
-                                  Dr. {appointmentsByPatient[patient.id].upcoming[0].doctor}
+                                  {appointmentsByPatient[patient.id].upcoming[0].doctor}
                                 </span>
                               </div>
                               <div className="flex items-center space-x-2">
@@ -519,13 +519,13 @@ ${appointmentInfo}
                               <div className="flex items-center space-x-2">
                                 <Clock className="w-3.5 h-3.5 text-dental-gray" />
                                 <span className="text-muted-foreground">
-                                  {appointmentsByPatient[patient.id].past[0].appointment_time}
+                                  {appointmentsByPatient[patient.id].past[0].appointment_time.slice(0, 5)}
                                 </span>
                               </div>
                               <div className="flex items-center space-x-2">
                                 <Stethoscope className="w-3.5 h-3.5 text-dental-gray" />
                                 <span className="text-muted-foreground">
-                                  Dr. {appointmentsByPatient[patient.id].past[0].doctor}
+                                  {appointmentsByPatient[patient.id].past[0].doctor}
                                 </span>
                               </div>
                               <div className="flex items-center space-x-2">

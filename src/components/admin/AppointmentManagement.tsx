@@ -75,8 +75,8 @@ Hello ${appointment.patient_name || 'Patient'},
 
 Your appointment details:
 📅 Date: ${appointment.appointment_date}
-⏰ Time: ${appointment.appointment_time}
-👨‍⚕️ Doctor: Dr. ${appointment.doctor}
+⏰ Time: ${appointment.appointment_time.slice(0, 5)}
+👨‍⚕️ Doctor: ${appointment.doctor}
 🏥 Service: ${appointment.service_type}
 📋 Status: ${appointment.status}
 ${appointment.notes ? `📝 Notes: ${appointment.notes}` : ''}
@@ -200,11 +200,11 @@ Thank you for choosing Hardik Dental!`;
                     </div>
                     <div className="flex items-center space-x-2">
                       <Clock className="w-4 h-4 text-dental-blue" />
-                      <span>{appointment.appointment_time}</span>
+                      <span>{appointment.appointment_time.slice(0, 5)}</span>
                     </div>
                     <div className="flex items-center space-x-2">
                       <User className="w-4 h-4 text-dental-blue" />
-                      <span>Dr. {appointment.doctor}</span>
+                      <span>{appointment.doctor}</span>
                     </div>
                   </div>
                   
